@@ -1,0 +1,28 @@
+.title-label {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+.text-field {
+    -fx-prompt-text-fill: #666666;
+}
+
+.password-field {
+    -fx-prompt-text-fill: #666666;
+}
+
+.button {
+    -fx-background-color: #4CAF50; /* Green */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
+.button:hover {
+    -fx-background-color: #45a049; /* Darker Green */
+}
+
+.button:pressed {
+    -fx-background-color: #3e8e41; /* Green */
+}
