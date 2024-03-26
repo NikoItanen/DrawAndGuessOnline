@@ -1,6 +1,5 @@
 package com.nijoat.frontend.controller;
 
-import com.nijoat.frontend.controller.LoginController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
