@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
+
+<HBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nijoat.frontend.controller.MessageController">
+    <children>
+        <TextField fx:id="usernameField" promptText="Enter username"/>
+        <TextField fx:id="messageField" promptText="Enter message"/>
+        <Button fx:id="sendButton" text="Send" onAction="#sendMessage"/>
+    </children>
+</HBox>
