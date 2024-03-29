@@ -1,10 +1,13 @@
 package com.nijoat.frontend.controller;
+import com.almasb.fxgl.entity.action.Action;
 import com.google.gson.JsonObject;
 import com.nijoat.frontend.model.User;
 
 import com.google.gson.Gson;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.TextField;
 import javafx.stage.Screen;
 import javafx.scene.Scene;
@@ -129,6 +132,20 @@ public class LoginController {
             for (StackTraceElement element : e.getStackTrace()) {
                 logger.severe(element.toString());
             }
+        }
+    }
+
+    @FXML
+    protected void devTestButtonClick (ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/nijoat/frontend/lobby-view.fxml"));
+            Parent root = fxmlLoader.load();
+
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            currentStage.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
