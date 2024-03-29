@@ -48,27 +48,28 @@ public class LoginController {
         String nickname = nicknameField.getText();
         String password = passwordField.getText();
 
-try {
-    URL url = new URL(BASE_URL + "/login");
-    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-    connection.setRequestMethod("POST");
-    connection.setRequestProperty("Content-Type", "application/json"); // Set content type to JSON
-    connection.setDoOutput(true);
+        try {
+            URL url = new URL(BASE_URL + "/login");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Type", "application/json"); // Set content type to JSON
+            connection.setDoOutput(true);
 
-    // Backkend ei synkkaa jos ei lähetä json muodossa, joten pitää otttaa gson käyttöön. Ei jostain syystä onnistunu mun koneella, mutta
-    // koodi on kunnossa ja depency lisätty, eli pitää vaan ajaa komento npm clean install ja sen jälkeen buildata uudestaan.
-    Gson gson = new Gson();
-    String jsonBody = gson.toJson(new User(nickname, password));
+            // Backkend ei synkkaa jos ei lähetä json muodossa, joten pitää otttaa gson käyttöön. Ei jostain syystä onnistunu mun koneella, mutta
+            // koodi on kunnossa ja depency lisätty, eli pitää vaan ajaa komento npm clean install ja sen jälkeen buildata uudestaan.
+            Gson gson = new Gson();
+            String jsonBody = gson.toJson(new User(nickname, password));
 
-    // Send the JSON request body
-    OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
-    writer.write(jsonBody);
-    writer.flush();
+            // Send the JSON request body
+            OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
+            writer.write(jsonBody);
+            writer.flush();
 
-    // Handle response...
-} catch (IOException e) {
-    e.printStackTrace();
-}
+            // Handle response...
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     // Method to handle register button click
     @FXML

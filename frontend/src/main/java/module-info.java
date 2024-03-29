@@ -6,6 +6,7 @@ module com.nijoat.frontend {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
     requires com.almasb.fxgl.all;
+    requires com.google.gson;
 
     opens com.nijoat.frontend to javafx.fxml;
     exports com.nijoat.frontend;
