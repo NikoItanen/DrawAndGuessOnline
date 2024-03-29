@@ -1,18 +1,19 @@
 package com.nijoat.frontend.controller;
 
+import com.google.gson.Gson;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
+import javafx.scene.control.TextField;
 import javafx.stage.Screen;
 import javafx.scene.Scene;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
+import javafx.fxml.FXMLLoader;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.io.IOException;
 
 public class LoginController {
     public void showLoginWindow() throws IOException {
@@ -33,45 +34,67 @@ public class LoginController {
         loginStage.show();
     }
 
+    private static final String BASE_URL = "http://localhost:8080";
+
     @FXML
     private TextField nicknameField;
 
     @FXML
     private TextField passwordField;
 
-    // Näihin ylläoleviin pitää tehdä vielä jotain muutoksia xml fileen, jotta toimii oikein. En osannut vielä tehdä niitä.
-
-    private static final String BASE_URL = "http://localhost:8080"; // Change this to your backend URL
-
+    // Method to handle login button click
     @FXML
     protected void onLoginButtonClick(ActionEvent event) {
         String nickname = nicknameField.getText();
         String password = passwordField.getText();
 
+try {
+    URL url = new URL(BASE_URL + "/login");
+    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+    connection.setRequestMethod("POST");
+    connection.setRequestProperty("Content-Type", "application/json"); // Set content type to JSON
+    connection.setDoOutput(true);
+
+    // Create a JSON object representing the user credentials
+    Gson gson = new Gson();
+    String jsonBody = gson.toJson(new User(nickname, password));
+
+    // Send the JSON request body
+    OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
+    writer.write(jsonBody);
+    writer.flush();
+
+    // Handle response...
+} catch (IOException e) {
+    e.printStackTrace();
+}
+
+    // Method to handle register button click
+    @FXML
+    protected void onRegisterButtonClick(ActionEvent event) {
+        String nickname = nicknameField.getText();
+        String password = passwordField.getText();
+
         try {
-            URL url = new URL(BASE_URL + "/login?nickname=" + nickname + "&password=" + password);
+            URL url = new URL(BASE_URL + "/register");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
+            connection.setDoOutput(true);
+
+            // Send request body
+            String requestBody = "nickname=" + nickname + "&password=" + password;
+            connection.getOutputStream().write(requestBody.getBytes());
 
             BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             String response = in.readLine();
             in.close();
 
-            if ("Login successful".equals(response)) {
-                // Successful login, navigate to lobby or another screen
-                System.out.println("Login successful");
-            } else {
-                // Failed login, display error message
-                System.out.println("Login failed: " + response);
-            }
+            System.out.println("Registration response: " + response);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-    // Alla oleva koodi on vielä kesken, mutta se on tarkoitus tehdä vastaavasti kuin ylläoleva koodi, mutta rekisteröintiä varten.
-    }
-    @FXML
-    protected void onRegisterButtonClick() {
-        System.out.println("Rekisteri nappi toimii!");
     }
 }
+    
+
+    
