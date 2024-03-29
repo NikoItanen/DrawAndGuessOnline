@@ -1,4 +1,6 @@
 package com.nijoat.frontend.controller;
+import com.google.gson.JsonObject;
+import com.nijoat.frontend.model.User;
 
 import com.google.gson.Gson;
 import javafx.event.ActionEvent;
@@ -14,8 +16,11 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 public class LoginController {
+    private static final Logger logger = Logger.getLogger(LoginController.class.getName());
+
     public void showLoginWindow() throws IOException {
 
         Stage loginStage = new Stage();
@@ -34,10 +39,15 @@ public class LoginController {
         loginStage.show();
     }
 
+    private OutputStreamWriter createOutputStreamWriter(HttpURLConnection connection) throws IOException {
+        connection.setDoOutput(true);
+        return new OutputStreamWriter(connection.getOutputStream());
+    }
+
     private static final String BASE_URL = "http://localhost:8080";
 
     @FXML
-    private TextField nicknameField;
+    private TextField usernameField;
 
     @FXML
     private TextField passwordField;
@@ -45,36 +55,47 @@ public class LoginController {
     // Method to handle login button click
     @FXML
     protected void onLoginButtonClick(ActionEvent event) {
-        String nickname = nicknameField.getText();
+        String username = usernameField.getText();
         String password = passwordField.getText();
 
         try {
+
             URL url = new URL(BASE_URL + "/login");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json"); // Set content type to JSON
-            connection.setDoOutput(true);
 
-            // Backkend ei synkkaa jos ei lähetä json muodossa, joten pitää otttaa gson käyttöön. Ei jostain syystä onnistunu mun koneella, mutta
-            // koodi on kunnossa ja depency lisätty, eli pitää vaan ajaa komento npm clean install ja sen jälkeen buildata uudestaan.
-            Gson gson = new Gson();
-            String jsonBody = gson.toJson(new User(nickname, password));
 
-            // Send the JSON request body
-            OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
-            writer.write(jsonBody);
-            writer.flush();
+            try (OutputStreamWriter writer = createOutputStreamWriter(connection)) {
+                Gson gson = new Gson();
+                String jsonBody = gson.toJson(new User(username, password));
 
-            // Handle response...
+                writer.write(jsonBody);
+                writer.flush();
+
+                int responseCode = connection.getResponseCode();
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    System.out.println("Login Successful.");;
+                } else if (responseCode == HttpURLConnection.HTTP_UNAUTHORIZED){
+                    System.out.println("Invalid username or password.");
+                } else {
+                    System.out.println("Failed to login. HTTP Error Code: " + responseCode);
+                }
+            }
+
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.severe("An error occurred during login: " + e.getMessage());
+            logger.severe("Stack trace: ");
+            for (StackTraceElement element : e.getStackTrace()) {
+                logger.severe(element.toString());
+            }
         }
     }
 
     // Method to handle register button click
     @FXML
     protected void onRegisterButtonClick(ActionEvent event) {
-        String nickname = nicknameField.getText();
+        String username = usernameField.getText();
         String password = passwordField.getText();
 
         try {
@@ -83,17 +104,31 @@ public class LoginController {
             connection.setRequestMethod("POST");
             connection.setDoOutput(true);
 
-            // Send request body
-            String requestBody = "nickname=" + nickname + "&password=" + password;
-            connection.getOutputStream().write(requestBody.getBytes());
+            connection.setRequestProperty("Content-Type", "application/json");
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            String response = in.readLine();
-            in.close();
+            JsonObject requestBodyJson = new JsonObject();
+            requestBodyJson.addProperty("username", username);
+            requestBodyJson.addProperty("password", password);
 
-            System.out.println("Registration response: " + response);
+
+            try (OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream())) {
+                writer.write(requestBodyJson.toString());
+                writer.flush();
+
+                int responseCode = connection.getResponseCode();
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    System.out.println("Registration Successful.");
+                } else {
+                    System.out.println("Failed to register. HTTP Error Code: " + responseCode);
+                }
+            }
+
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.severe("An error occurred during registration: " + e.getMessage());
+            logger.severe("Stack trace: ");
+            for (StackTraceElement element : e.getStackTrace()) {
+                logger.severe(element.toString());
+            }
         }
     }
 }
