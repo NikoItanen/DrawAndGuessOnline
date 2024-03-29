@@ -55,7 +55,8 @@ try {
     connection.setRequestProperty("Content-Type", "application/json"); // Set content type to JSON
     connection.setDoOutput(true);
 
-    // Create a JSON object representing the user credentials
+    // Backkend ei synkkaa jos ei lähetä json muodossa, joten pitää otttaa gson käyttöön. Ei jostain syystä onnistunu mun koneella, mutta
+    // koodi on kunnossa ja depency lisätty, eli pitää vaan ajaa komento npm clean install ja sen jälkeen buildata uudestaan.
     Gson gson = new Gson();
     String jsonBody = gson.toJson(new User(nickname, password));
 
