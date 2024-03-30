@@ -5,6 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="720f8a2f-052c-4ba5-ae0c-c00fb633db99" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/nijoat/backend/model/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/main/resources/.env.example" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/nijoat/backend/Authentication.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/nijoat/backend/Authentication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/nijoat/backend/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/nijoat/backend/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/main/java/com/nijoat/frontend/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main/java/com/nijoat/frontend/controller/LoginController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -55,7 +64,7 @@
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;17&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/itane.DESKTOP-D9VU66U/Documents/GitHub/DrawAndGuessOnline/frontend/src/main/resources/com/nijoat/frontend/static&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
@@ -67,15 +76,18 @@
       <recent name="C:\Users\itane.DESKTOP-D9VU66U\Documents\GitHub\DrawAndGuessOnline\frontend\src\main\resources\com\nijoat\frontend\static" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\itane.DESKTOP-D9VU66U\Documents\GitHub\DrawAndGuessOnline\backend\src\main\resources" />
+      <recent name="C:\Users\itane.DESKTOP-D9VU66U\Documents\GitHub\DrawAndGuessOnline" />
+      <recent name="C:\Users\itane.DESKTOP-D9VU66U\Documents\GitHub\DrawAndGuessOnline\backend" />
       <recent name="C:\Users\itane.DESKTOP-D9VU66U\Documents\GitHub\DrawAndGuessOnline\frontend\src\main\resources\com\nijoat\frontend" />
       <recent name="C:\Users\itane.DESKTOP-D9VU66U\Documents\GitHub\DrawAndGuessOnline\frontend\src\main\resources\com\nijoat\frontend\static\icons" />
-      <recent name="C:\Users\itane.DESKTOP-D9VU66U\Documents\GitHub\DrawAndGuessOnline" />
     </key>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
         <option value="jdk-17.0.9-corretto-17.0.9-4caba194b151-107bc6b7" />
+        <option value="jdk-21.0.2-openjdk-21.0.2-4caba194b151-4f524021" />
       </set>
     </attachedChunks>
   </component>

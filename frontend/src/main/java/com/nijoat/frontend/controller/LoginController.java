@@ -66,7 +66,7 @@ public class LoginController {
             URL url = new URL(BASE_URL + "/login");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
-            connection.setRequestProperty("Content-Type", "application/json"); // Set content type to JSON
+            connection.setRequestProperty("Content-Type", "application/json");
 
 
             try (OutputStreamWriter writer = createOutputStreamWriter(connection)) {
@@ -112,6 +112,7 @@ public class LoginController {
             JsonObject requestBodyJson = new JsonObject();
             requestBodyJson.addProperty("username", username);
             requestBodyJson.addProperty("password", password);
+            System.out.println(requestBodyJson);
 
 
             try (OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream())) {
