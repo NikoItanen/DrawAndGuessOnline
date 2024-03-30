@@ -43,6 +43,7 @@
                         </Button>
 
                         <Button onAction="#onRegisterButtonClick" text="Sign Up" textFill="#838383" />
+                  <Label fx:id="statusLabel"/>
                     </VBox>
                 </center>
             </BorderPane>

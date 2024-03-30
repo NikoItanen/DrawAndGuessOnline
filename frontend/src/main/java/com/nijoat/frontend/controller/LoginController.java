@@ -1,5 +1,4 @@
 package com.nijoat.frontend.controller;
-import com.almasb.fxgl.entity.action.Action;
 import com.google.gson.JsonObject;
 import com.nijoat.frontend.model.User;
 
@@ -8,7 +7,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -55,6 +56,10 @@ public class LoginController {
     @FXML
     private TextField passwordField;
 
+    @FXML
+    private Label statusLabel;
+
+
     // Method to handle login button click
     @FXML
     protected void onLoginButtonClick(ActionEvent event) {
@@ -78,9 +83,20 @@ public class LoginController {
 
                 int responseCode = connection.getResponseCode();
                 if (responseCode == HttpURLConnection.HTTP_OK) {
-                    System.out.println("Login Successful.");;
+                    System.out.println("Login Successful.");
+                    try {
+                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/nijoat/frontend/lobby-view.fxml"));
+                        Parent root = fxmlLoader.load();
+
+                        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+                        currentStage.getScene().setRoot(root);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 } else if (responseCode == HttpURLConnection.HTTP_UNAUTHORIZED){
-                    System.out.println("Invalid username or password.");
+                    statusLabel.setText("Invalid username or password.");
+                    statusLabel.setTextFill(Color.RED);
                 } else {
                     System.out.println("Failed to login. HTTP Error Code: " + responseCode);
                 }
@@ -112,8 +128,6 @@ public class LoginController {
             JsonObject requestBodyJson = new JsonObject();
             requestBodyJson.addProperty("username", username);
             requestBodyJson.addProperty("password", password);
-            System.out.println(requestBodyJson);
-
 
             try (OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream())) {
                 writer.write(requestBodyJson.toString());
@@ -121,7 +135,11 @@ public class LoginController {
 
                 int responseCode = connection.getResponseCode();
                 if (responseCode == HttpURLConnection.HTTP_OK) {
-                    System.out.println("Registration Successful.");
+                    statusLabel.setText("User registered successfully!");
+                    statusLabel.setTextFill(Color.GREEN);
+                } else if (responseCode == HttpURLConnection.HTTP_BAD_REQUEST) {
+                    statusLabel.setText("Username already exists!");
+                    statusLabel.setTextFill(Color.RED);
                 } else {
                     System.out.println("Failed to register. HTTP Error Code: " + responseCode);
                 }
