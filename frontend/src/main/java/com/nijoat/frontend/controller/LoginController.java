@@ -91,6 +91,8 @@ public class LoginController {
                         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
                         currentStage.getScene().setRoot(root);
+                        MessageController messageController = new MessageController();
+                        messageController.openSecondWindow(username);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

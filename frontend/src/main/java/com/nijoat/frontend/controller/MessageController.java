@@ -21,20 +21,14 @@ import java.util.concurrent.TimeUnit;
 
 import javafx.application.Platform;
 
-// Tässä voitaisiin myös käyttää websockettia, mutta helpompi ja yhteinäisempi tapa HTTP-pyynnöillä
-// Toimii melko reaaliajassa
-
-
 public class MessageController {
 
-    @FXML
-    private TextField usernameField;
     @FXML
     private TextField messageField;
     @FXML
     private Button sendButton;
 
-    public void openSecondWindow() {
+    public void openSecondWindow(String username) {
         try {
             Stage secondStage = new Stage();
             Label messageLabel = new Label();
@@ -46,15 +40,13 @@ public class MessageController {
             root.getChildren().add(messageLabel);
 
             // Input UI
-            usernameField = new TextField();
-            usernameField.setPromptText("Enter username");
             messageField = new TextField();
             messageField.setPromptText("Enter message");
-            root.getChildren().addAll(usernameField, messageField);
+            root.getChildren().addAll(messageField);
 
             // Send UI
             sendButton = new Button("Send");
-            sendButton.setOnAction(event -> sendMessage());
+            sendButton.setOnAction(event -> sendMessage(username));
             root.getChildren().add(sendButton);
             
             // Hakee viestit bäkkäristä x sekunnin välein
@@ -98,9 +90,8 @@ public class MessageController {
 
 
     // Source: https://www.baeldung.com/httpurlconnection-post
-    private void sendMessage() {
+    private void sendMessage(String username) {
         try {
-            String username = usernameField.getText();
             String message = messageField.getText();
 
             String jsonPayload = "{\"sender\":\"" + username + "\",\"content\":\"" + message + "\"}";
@@ -124,7 +115,6 @@ public class MessageController {
             }
 
             con.disconnect();
-            usernameField.clear();
             messageField.clear();
 
         } catch (IOException e) {
