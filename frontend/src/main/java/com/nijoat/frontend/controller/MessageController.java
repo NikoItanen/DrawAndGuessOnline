@@ -1,12 +1,14 @@
 package com.nijoat.frontend.controller;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.TextFlow;
+import javafx.scene.text.Text;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,49 +22,33 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import javafx.application.Platform;
-
-// Tässä voitaisiin myös käyttää websockettia, mutta helpompi ja yhteinäisempi tapa HTTP-pyynnöillä
-// Toimii melko reaaliajassa
-
+import javafx.event.ActionEvent;
 
 public class MessageController {
 
     @FXML
-    private TextField usernameField;
-    @FXML
     private TextField messageField;
     @FXML
     private Button sendButton;
+    @FXML
+    private TextFlow messageFlow;
 
-    public void openSecondWindow() {
+    private String username;
+
+    public void openSecondWindow(String username) {
+        this.username = username;
         try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/nijoat/frontend/message-view.fxml"));
+            fxmlLoader.setController(this);
             Stage secondStage = new Stage();
-            Label messageLabel = new Label();
-            HBox root = new HBox(10);
-            
-            // Tämä osio hakee viestit bäkkäristä
-            String messages = fetchMessages();
-            messageLabel.setText(messages);
-            root.getChildren().add(messageLabel);
-
-            // Input UI
-            usernameField = new TextField();
-            usernameField.setPromptText("Enter username");
-            messageField = new TextField();
-            messageField.setPromptText("Enter message");
-            root.getChildren().addAll(usernameField, messageField);
-
-            // Send UI
-            sendButton = new Button("Send");
-            sendButton.setOnAction(event -> sendMessage());
-            root.getChildren().add(sendButton);
-            
-            // Hakee viestit bäkkäristä x sekunnin välein
+            VBox root = fxmlLoader.load();
+            messageFlow = (TextFlow) fxmlLoader.getNamespace().get("messageFlow");
+            updateMessages();
+    
+            // Fetch messages from backend periodically
             ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-            executorService.scheduleAtFixedRate(() -> {
-                Platform.runLater(() -> updateMessages(messageLabel));
-            }, 0, 1, TimeUnit.SECONDS);
-            
+            executorService.scheduleAtFixedRate(this::updateMessages, 0, 1, TimeUnit.SECONDS);
+    
             secondStage.setScene(new Scene(root));
             secondStage.show();
         } catch (Exception e) {
@@ -70,9 +56,14 @@ public class MessageController {
         }
     }
 
-    private void updateMessages(Label messageLabel) {
-        String messages = fetchMessages();
-        Platform.runLater(() -> messageLabel.setText(messages));
+    private void updateMessages() {
+        Platform.runLater(() -> {
+            String messages = fetchMessages();
+    
+            messageFlow.getChildren().clear();
+            Text messageText = new Text(messages);
+            messageFlow.getChildren().add(messageText);
+        });
     }
 
     private String fetchMessages() {
@@ -88,7 +79,6 @@ public class MessageController {
                 response.append(inputLine);
             }
             in.close();
-
             return response.toString();
         } catch (IOException e) {
             e.printStackTrace();
@@ -96,11 +86,14 @@ public class MessageController {
         }
     }
 
-
+    @FXML
+    private void onButtonSend(ActionEvent event) {
+        sendMessage();
+    }
+    
     // Source: https://www.baeldung.com/httpurlconnection-post
     private void sendMessage() {
         try {
-            String username = usernameField.getText();
             String message = messageField.getText();
 
             String jsonPayload = "{\"sender\":\"" + username + "\",\"content\":\"" + message + "\"}";
@@ -110,7 +103,6 @@ public class MessageController {
             con.setRequestMethod("POST");
             con.setRequestProperty("Content-Type", "application/json; utf-8");
             con.setDoOutput(true);
-
             try (OutputStream os = con.getOutputStream()) {
                 byte[] input = jsonPayload.getBytes(StandardCharsets.UTF_8);
                 os.write(input, 0, input.length);
@@ -124,9 +116,7 @@ public class MessageController {
             }
 
             con.disconnect();
-            usernameField.clear();
             messageField.clear();
-
         } catch (IOException e) {
             e.printStackTrace();
         }

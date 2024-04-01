@@ -12,9 +12,6 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws IOException {
         LoginController loginController = new LoginController();
         loginController.showLoginWindow();
-
-        MessageController messageController = new MessageController();
-        messageController.openSecondWindow();
     }
     
 
