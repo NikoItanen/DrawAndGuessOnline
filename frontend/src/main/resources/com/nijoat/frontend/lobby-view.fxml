@@ -36,6 +36,13 @@
             </image>
          </ImageView>
       </left>
+      <top>
+         <BorderPane prefHeight="30.0" prefWidth="1238.0" BorderPane.alignment="CENTER">
+            <left>
+               <Button onAction="#testRoomButtonClick" text="TESTROOM" BorderPane.alignment="CENTER" />
+            </left>
+         </BorderPane>
+      </top>
    </BorderPane>
 
     <BorderPane prefHeight="755.0" prefWidth="1240.0">
