@@ -13,6 +13,13 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class LobbyController {
+
+    private String username;
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     @FXML
     protected void onLogoutButtonClick(ActionEvent event) {
         try {
@@ -34,6 +41,9 @@ public class LobbyController {
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
             currentStage.getScene().setRoot(root);
+            
+            MessageController messageController = new MessageController();
+            messageController.openSecondWindow(username);
         } catch (IOException e) {
             e.printStackTrace();
         }

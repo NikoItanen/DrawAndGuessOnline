@@ -87,13 +87,13 @@ public class LoginController {
                     try {
                         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/nijoat/frontend/lobby-view.fxml"));
                         Parent root = fxmlLoader.load();
+                        LobbyController lobbyController = fxmlLoader.getController();
+                        lobbyController.setUsername(username);
 
                         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
                         currentStage.getScene().setRoot(root);
                         System.out.println(username + " logged in");
-                        MessageController messageController = new MessageController();
-                        messageController.openSecondWindow(username);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
