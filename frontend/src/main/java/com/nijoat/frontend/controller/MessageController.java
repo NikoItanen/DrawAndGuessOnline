@@ -7,6 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.TextFlow;
 import javafx.scene.text.Text;
 
@@ -17,9 +18,16 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -34,9 +42,17 @@ public class MessageController {
     private TextFlow messageFlow;
 
     private String username;
+    private String color;
+    List<String> list1 = Arrays.asList("RED", "BLUE", "GREEN", "ORANGE", "YELLOW", "PURPLE", "BLACK", "BROWN");
 
     public void openSecondWindow(String username) {
         this.username = username;
+
+        // Chat color :D
+        Random random = new Random();
+        int rand = random.nextInt(8);
+        color = list1.get(rand);
+
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/nijoat/frontend/message-view.fxml"));
             fxmlLoader.setController(this);
@@ -61,8 +77,19 @@ public class MessageController {
             String messages = fetchMessages();
     
             messageFlow.getChildren().clear();
-            Text messageText = new Text(messages);
-            messageFlow.getChildren().add(messageText);
+            JsonArray jsonArray = JsonParser.parseString(messages).getAsJsonArray();
+    
+            for (int i = 0; i < jsonArray.size(); i++) {
+                JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
+                String sender = jsonObject.get("sender").getAsString();
+                String content = jsonObject.get("content").getAsString();
+    
+                Text senderText = new Text(sender + ": ");
+                senderText.setFill(Color.web(color));
+                Text contentText = new Text(content);
+    
+                messageFlow.getChildren().addAll(senderText, contentText, new Text("\n"));
+            }
         });
     }
 
