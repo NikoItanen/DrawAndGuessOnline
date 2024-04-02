@@ -2,16 +2,13 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.effect.Glow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.TextFlow?>
-<?import javafx.scene.control.TextField?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" spacing="20.0" style="-fx-background-color: #F5EBEB;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" spacing="20.0" style="-fx-background-color: #F5EBEB;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nijoat.frontend.controller.GameController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -35,13 +32,12 @@
     </BorderPane>
 
     <BorderPane prefHeight="755.0" prefWidth="1240.0" style="-fx-background-color: #E4D0D0; -fx-border-color: #D5B4B4;">
-        <effect>
-            <Glow />
-        </effect>
-        
-        <!-- Placeholder for the message view -->
-        <!-- The MessageController will insert its content here -->
-        
+      <right>
+         <BorderPane nodeOrientation="LEFT_TO_RIGHT" prefHeight="673.0" prefWidth="356.0" BorderPane.alignment="CENTER">
+            <bottom>
+                   <fx:include source="message-view.fxml" />
+            </bottom>
+         </BorderPane>
+      </right>
     </BorderPane>
-    
 </VBox>

@@ -1,12 +1,9 @@
 package com.nijoat.frontend.controller;
 
+import com.nijoat.frontend.util.UserSession;
+
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
-import javafx.scene.Scene;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextFlow;
 import javafx.scene.text.Text;
@@ -18,9 +15,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -35,36 +29,17 @@ import javafx.event.ActionEvent;
 public class MessageController {
 
     @FXML
-    private TextField messageField;
-    @FXML
-    private Button sendButton;
+    private TextField inputField;
+
     @FXML
     private TextFlow messageFlow;
 
-    private String username;
-    private String color;
-    List<String> list1 = Arrays.asList("RED", "BLUE", "GREEN", "ORANGE", "YELLOW", "PURPLE", "BLACK", "BROWN");
+    @FXML
+    public void initialize() {
 
-    public void openSecondWindow(String username) {
-        this.username = username;
-    
-        // Chat color :D
-        Random random = new Random();
-        int rand = random.nextInt(8);
-        color = list1.get(rand);
-    
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/nijoat/frontend/message-view.fxml"));
-            VBox root = fxmlLoader.load();
-            messageFlow = (TextFlow) fxmlLoader.getNamespace().get("messageFlow");
-    
-            updateMessages();
-    
-            ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-            executorService.scheduleAtFixedRate(this::updateMessages, 0, 1, TimeUnit.SECONDS);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        updateMessages();
+        ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+        executorService.scheduleAtFixedRate(this::updateMessages, 0, 1, TimeUnit.SECONDS);
     }
 
     private void updateMessages() {
@@ -80,7 +55,7 @@ public class MessageController {
                 String content = jsonObject.get("content").getAsString();
     
                 Text senderText = new Text(sender + ": ");
-                senderText.setFill(Color.web(color));
+                senderText.setFill(Color.RED);
                 Text contentText = new Text(content);
     
                 messageFlow.getChildren().addAll(senderText, contentText, new Text("\n"));
@@ -116,9 +91,9 @@ public class MessageController {
     // Source: https://www.baeldung.com/httpurlconnection-post
     private void sendMessage() {
         try {
-            String message = messageField.getText();
+            String message = inputField.getText();
 
-            String jsonPayload = "{\"sender\":\"" + username + "\",\"content\":\"" + message + "\"}";
+            String jsonPayload = "{\"sender\":\"" + UserSession.getUsername() + "\",\"content\":\"" + message + "\"}";
 
             URL url = new URL("http://localhost:8080/sendmessage");
             HttpURLConnection con = (HttpURLConnection)url.openConnection();
@@ -138,7 +113,7 @@ public class MessageController {
             }
 
             con.disconnect();
-            messageField.clear();
+            inputField.clear();
         } catch (IOException e) {
             e.printStackTrace();
         }

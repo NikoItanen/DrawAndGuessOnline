@@ -1,19 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.TextFlow?>
 
-<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nijoat.frontend.controller.MessageController">
+<VBox style="-fx-border-color: #D5B4B4;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nijoat.frontend.controller.MessageController">
    <children>
-      <VBox prefHeight="600.0" prefWidth="400.0">
-         <children>
-            <TextFlow lineSpacing="10.0" prefHeight="576.0" prefWidth="400.0" fx:id="messageFlow" />
-            <TextField fx:id="messageField" prefHeight="26.0" prefWidth="400.0" promptText="Send a message..." />
-            <Button alignment="BOTTOM_CENTER" mnemonicParsing="false" onAction="#onButtonSend" text="Send" textFill="#ff7bc3" />
-         </children>
-      </VBox>
+      <BorderPane prefHeight="542.0" prefWidth="273.0">
+         <bottom>
+            <VBox prefHeight="50.0" prefWidth="273.0" spacing="5.0" style="-fx-background-color: #E4D0D0;">
+               <children>
+                  <BorderPane prefHeight="64.0" prefWidth="273.0">
+                     <left>
+                        <BorderPane prefHeight="45.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                           <center>
+                              <TextField fx:id="inputField" prefHeight="12.0" prefWidth="200.0" promptText="Send a message..." BorderPane.alignment="CENTER" />
+                           </center>
+                        </BorderPane>
+                     </left>
+                     <right>
+                        <Button alignment="BOTTOM_CENTER" mnemonicParsing="false" onAction="#onButtonSend" text="Send" textFill="#ff7bc3" BorderPane.alignment="CENTER" />
+                     </right>
+                  </BorderPane>
+               </children>
+            </VBox>
+         </bottom>
+         <center>
+            <TextFlow fx:id="messageFlow" lineSpacing="10.0" prefHeight="530.0" prefWidth="273.0" style="-fx-background-color: #E4D0D0; -fx-border-color: #D5B4B4;" BorderPane.alignment="CENTER" />
+         </center>
+         <top>
+            <BorderPane prefHeight="0.0" prefWidth="273.0" BorderPane.alignment="CENTER">
+               <top>
+                  <Label alignment="CENTER" prefHeight="0.0" prefWidth="142.0" text="Draw And Guess" BorderPane.alignment="CENTER" />
+               </top>
+            </BorderPane>
+         </top>
+      </BorderPane>
    </children>
 </VBox>

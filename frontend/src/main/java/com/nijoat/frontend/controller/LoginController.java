@@ -1,6 +1,7 @@
 package com.nijoat.frontend.controller;
 import com.google.gson.JsonObject;
 import com.nijoat.frontend.model.User;
+import com.nijoat.frontend.util.UserSession;
 
 import com.google.gson.Gson;
 import javafx.event.ActionEvent;
@@ -66,6 +67,8 @@ public class LoginController {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
+
+
         try {
 
             URL url = new URL(BASE_URL + "/login");
@@ -88,7 +91,7 @@ public class LoginController {
                         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/nijoat/frontend/lobby-view.fxml"));
                         Parent root = fxmlLoader.load();
                         LobbyController lobbyController = fxmlLoader.getController();
-                        lobbyController.setUsername(username);
+                        UserSession.setUsername(username);
 
                         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
