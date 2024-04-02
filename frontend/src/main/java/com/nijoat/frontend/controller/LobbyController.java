@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -41,12 +42,17 @@ public class LobbyController {
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
             currentStage.getScene().setRoot(root);
-            
-            MessageController messageController = new MessageController();
+        
+            FXMLLoader messageLoader = new FXMLLoader(getClass().getResource("/com/nijoat/frontend/message-view.fxml"));
+            VBox messageRoot = messageLoader.load();
+        
+            MessageController messageController = messageLoader.getController();
             messageController.openSecondWindow(username);
+        
+            VBox gameRoot = (VBox) root;
+            gameRoot.getChildren().add(messageRoot);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
 }

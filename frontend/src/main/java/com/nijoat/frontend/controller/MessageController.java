@@ -47,26 +47,21 @@ public class MessageController {
 
     public void openSecondWindow(String username) {
         this.username = username;
-
+    
         // Chat color :D
         Random random = new Random();
         int rand = random.nextInt(8);
         color = list1.get(rand);
-
+    
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/nijoat/frontend/message-view.fxml"));
-            fxmlLoader.setController(this);
-            Stage secondStage = new Stage();
             VBox root = fxmlLoader.load();
             messageFlow = (TextFlow) fxmlLoader.getNamespace().get("messageFlow");
+    
             updateMessages();
     
-            // Fetch messages from backend periodically
             ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
             executorService.scheduleAtFixedRate(this::updateMessages, 0, 1, TimeUnit.SECONDS);
-    
-            secondStage.setScene(new Scene(root));
-            secondStage.show();
         } catch (Exception e) {
             e.printStackTrace();
         }
