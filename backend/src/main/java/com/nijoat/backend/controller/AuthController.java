@@ -1,4 +1,4 @@
-package com.nijoat.backend;
+package com.nijoat.backend.controller;
 
 import com.nijoat.backend.model.User;
 
@@ -6,25 +6,20 @@ import com.nijoat.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.context.annotation.Bean;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @Component
 @CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
-public class Authentication {
+public class AuthController {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public Authentication(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
+    public AuthController(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }

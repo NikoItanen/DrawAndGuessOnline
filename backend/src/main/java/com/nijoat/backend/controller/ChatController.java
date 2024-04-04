@@ -1,11 +1,11 @@
-package com.nijoat.backend;
+package com.nijoat.backend.controller;
 
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-public class Chat {
+public class ChatController {
     private static List<Message> messages = new ArrayList<>();
 
     @PostMapping("/sendmessage")

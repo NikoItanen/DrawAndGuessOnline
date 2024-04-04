@@ -1,4 +1,4 @@
-package com.nijoat.backend;
+package com.nijoat.backend.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
