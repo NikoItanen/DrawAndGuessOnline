@@ -7,6 +7,8 @@ module com.nijoat.frontend {
     requires org.kordamp.bootstrapfx.core;
     requires com.almasb.fxgl.all;
     requires com.google.gson;
+    requires org.eclipse.jetty.websocket.client;
+    requires org.eclipse.jetty.websocket.api;
 
     opens com.nijoat.frontend to javafx.fxml;
     opens com.nijoat.frontend.model to com.google.gson;

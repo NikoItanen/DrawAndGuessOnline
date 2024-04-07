@@ -20,6 +20,7 @@ public class Main {
         try {
             backendThread.join();
             frontendThread.join();
+
         } catch (InterruptedException e) {
             System.err.println("Main thread interrupted: " + e.getMessage());
         }

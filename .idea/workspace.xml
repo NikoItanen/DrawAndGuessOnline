@@ -5,18 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="720f8a2f-052c-4ba5-ae0c-c00fb633db99" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/nijoat/backend/config/WebSocketConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/nijoat/backend/handler/WebSocketHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/nijoat/backend/model/Message.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/main/java/com/nijoat/frontend/websocket/ProgramWebSocket.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/mvnw" beforeDir="false" afterPath="$PROJECT_DIR$/backend/mvnw" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/nijoat/backend/Authentication.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/nijoat/backend/controller/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/nijoat/backend/Chat.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/nijoat/backend/controller/ChatController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/nijoat/backend/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/nijoat/backend/BackendServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/nijoat/backend/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/nijoat/backend/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/mvnw" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/mvnw" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/nijoat/backend/controller/ChatController.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/main/java/com/nijoat/frontend/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main/java/com/nijoat/frontend/FrontendServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/main/java/com/nijoat/frontend/controller/MessageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main/java/com/nijoat/frontend/controller/MessageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/DrawAndGuessOnline/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/DrawAndGuessOnline/Main.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,9 +56,12 @@
     "Application.Application.executor": "Run",
     "Application.BackendApplication.executor": "Run",
     "Application.BackendServer.executor": "Run",
+    "Application.FrontendServer.executor": "Run",
     "Application.HelloApplication.executor": "Run",
     "Application.Main.executor": "Run",
     "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
+    "Maven.frontend [clean].executor": "Run",
+    "Maven.frontend [install].executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
@@ -68,7 +70,7 @@
     "jdk.selected.JAVA_MODULE": "17",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/itane.DESKTOP-D9VU66U/Documents/GitHub/DrawAndGuessOnline/frontend/src/main/resources/com/nijoat/frontend/static",
-    "project.structure.last.edited": "Project",
+    "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "run.code.analysis.last.selected.profile": "pProject Default",
@@ -126,6 +128,10 @@
         <breakpoint enabled="true" type="java-exception">
           <properties class="java.lang.IllegalStateException" package="java.lang" />
           <option name="timeStamp" value="1" />
+        </breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.RuntimeException" package="java.lang" />
+          <option name="timeStamp" value="2" />
         </breakpoint>
       </breakpoints>
     </breakpoint-manager>
