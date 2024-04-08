@@ -9,6 +9,8 @@ module com.nijoat.frontend {
     requires com.google.gson;
     requires org.eclipse.jetty.websocket.client;
     requires org.eclipse.jetty.websocket.api;
+    requires org.eclipse.jetty.util;
+    requires org.eclipse.jetty.websocket.common;
 
     opens com.nijoat.frontend to javafx.fxml;
     opens com.nijoat.frontend.model to com.google.gson;
