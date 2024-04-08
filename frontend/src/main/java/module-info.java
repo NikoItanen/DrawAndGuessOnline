@@ -16,6 +16,16 @@ module com.nijoat.frontend {
     opens com.nijoat.frontend.model to com.google.gson;
 
     exports com.nijoat.frontend;
-    exports com.nijoat.frontend.controller;
-    opens com.nijoat.frontend.controller to javafx.fxml;
+    exports com.nijoat.frontend.controller.auth;
+    opens com.nijoat.frontend.controller.auth to javafx.fxml;
+    exports com.nijoat.frontend.controller.game;
+    opens com.nijoat.frontend.controller.game to javafx.fxml;
+    exports com.nijoat.frontend.controller.messaging;
+    opens com.nijoat.frontend.controller.messaging to javafx.fxml;
+    exports com.nijoat.frontend.controller.room;
+    opens com.nijoat.frontend.controller.room to javafx.fxml;
+    exports com.nijoat.frontend.controller.drawing;
+    opens com.nijoat.frontend.controller.drawing to javafx.fxml;
+    exports com.nijoat.frontend.controller.menu;
+    opens com.nijoat.frontend.controller.menu to javafx.fxml;
 }

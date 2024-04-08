@@ -24,7 +24,6 @@ public class ProgramWebSocket implements WebSocketListener {
 
     @Override
     public void onWebSocketText(String message) {
-        System.out.println("Received message: " + message);
         if (messageHandler != null) {
             messageHandler.accept(message);
         }

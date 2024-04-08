@@ -1,4 +1,4 @@
-package com.nijoat.frontend.controller;
+package com.nijoat.frontend.controller.game;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

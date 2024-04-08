@@ -1,6 +1,6 @@
 package com.nijoat.frontend;
 
-import com.nijoat.frontend.controller.LoginController;
+import com.nijoat.frontend.controller.auth.LoginController;
 
 import javafx.application.Application;
 import javafx.stage.Stage;

@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.TextFlow?>
 
-<VBox style="-fx-border-color: #D5B4B4;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nijoat.frontend.controller.MessageController">
+<VBox style="-fx-border-color: #D5B4B4;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nijoat.frontend.controller.messaging.MessageController">
    <children>
       <BorderPane prefHeight="542.0" prefWidth="273.0">
          <bottom>

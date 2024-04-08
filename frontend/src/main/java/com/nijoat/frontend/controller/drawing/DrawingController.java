@@ -1,4 +1,4 @@
-package com.nijoat.frontend.controller;
+package com.nijoat.frontend.controller.drawing;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;

@@ -9,7 +9,7 @@
 <?import javafx.scene.canvas.Canvas?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.nijoat.frontend.controller.DrawingController"
+            fx:controller="com.nijoat.frontend.controller.drawing.DrawingController"
             prefHeight="600.0" prefWidth="600.0">
 
     <top>

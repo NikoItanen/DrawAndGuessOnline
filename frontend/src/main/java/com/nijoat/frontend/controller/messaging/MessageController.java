@@ -1,4 +1,4 @@
-package com.nijoat.frontend.controller;
+package com.nijoat.frontend.controller.messaging;
 
 import com.google.gson.stream.JsonReader;
 import com.nijoat.frontend.websocket.ProgramWebSocket;
@@ -37,7 +37,7 @@ public class MessageController {
         client = new WebSocketClient();
         try {
             client.start();
-            URI echoUri = new URI("ws://localhost:8080/websocket");
+            URI echoUri = new URI("ws://localhost:8080/websocket/room");
             socket = new ProgramWebSocket();
             client.connect(socket, echoUri);
             socket.setMessageHandler(this::processMessage);

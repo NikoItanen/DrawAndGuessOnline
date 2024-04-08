@@ -1,5 +1,6 @@
-package com.nijoat.frontend.controller;
+package com.nijoat.frontend.controller.auth;
 import com.google.gson.JsonObject;
+import com.nijoat.frontend.controller.menu.MenuController;
 import com.nijoat.frontend.model.User;
 import com.nijoat.frontend.util.UserSession;
 
@@ -15,8 +16,7 @@ import javafx.stage.Screen;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -67,8 +67,6 @@ public class LoginController {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
-
-
         try {
 
             URL url = new URL(BASE_URL + "/login");
@@ -88,10 +86,12 @@ public class LoginController {
                 if (responseCode == HttpURLConnection.HTTP_OK) {
                     System.out.println("Login Successful.");
                     try {
-                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/nijoat/frontend/lobby-view.fxml"));
+                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/nijoat/frontend/menu-view.fxml"));
                         Parent root = fxmlLoader.load();
-                        LobbyController lobbyController = fxmlLoader.getController();
+                        MenuController menuController = fxmlLoader.getController();
                         UserSession.setUsername(username);
+
+                        menuController.initializeWebSocket();
 
                         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
@@ -163,7 +163,7 @@ public class LoginController {
     @FXML
     protected void devTestButtonClick (ActionEvent event) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/nijoat/frontend/lobby-view.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/nijoat/frontend/menu-view.fxml"));
             Parent root = fxmlLoader.load();
 
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
