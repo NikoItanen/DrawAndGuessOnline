@@ -49,16 +49,22 @@ public class MessageController {
     private void processMessage(String message) {
         try {
             JsonReader reader = new JsonReader(new StringReader(message));
+            System.out.println(message);
             reader.setLenient(true);
             JsonObject jsonObject = new JsonParser().parse(reader).getAsJsonObject();
 
             String sender = jsonObject.get("sender").getAsString();
             String content = jsonObject.get("content").getAsString();
+            boolean isCorrect = jsonObject.get("isCorrect").getAsBoolean();
+            System.out.println(isCorrect);
 
             Platform.runLater(() -> {
                 Text senderText = new Text(sender + ": ");
                 senderText.setFill(Color.RED);
                 Text contentText = new Text(content);
+                if (isCorrect) {
+                    contentText.setFill(Color.GREEN);
+                }
 
                 messageFlow.getChildren().addAll(senderText, contentText, new Text("\n"));
             });

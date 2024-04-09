@@ -9,11 +9,16 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 @Component
 public class RoomWebSocketHandler extends TextWebSocketHandler {
@@ -21,10 +26,21 @@ public class RoomWebSocketHandler extends TextWebSocketHandler {
     private final ObjectMapper objectMapper;
 
     private final List<Message> messages = new ArrayList<>();
+    private List<String> gamewords = new ArrayList<>(Arrays.asList("get", "to", "the", "choppa", "aaa"));
+    private String randWord;
+    private boolean isCorrect;
+    
 
     @Autowired
     public RoomWebSocketHandler(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
+        gamewordsInitialize();
+    }
+
+    public void gamewordsInitialize() {
+        Random rand = new Random();
+        int index = rand.nextInt(gamewords.size());
+        randWord = gamewords.get(index);
     }
 
     public void afterConnectionEstablished(WebSocketSession session) throws IOException {
@@ -39,9 +55,15 @@ public class RoomWebSocketHandler extends TextWebSocketHandler {
         String payload = message.getPayload();
         System.out.println("Received message in room" + roomId + ": " + payload);
         Message receivedMessage = objectMapper.readValue(payload, Message.class);
+        if (receivedMessage.getContent().equals(randWord)) {
+            System.out.println("Correcto!");
+            isCorrect = true;
+        } else {
+            isCorrect = false; }
         messages.add(receivedMessage);
 
-        broadcastChatMessage(roomId, message);
+        broadcastChatMessage(roomId, message, isCorrect);
+        isCorrect = false;
     }
 
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
@@ -69,11 +91,23 @@ public class RoomWebSocketHandler extends TextWebSocketHandler {
         }
     }
 
-    private void broadcastChatMessage(String roomId, TextMessage message) {
+    private void broadcastChatMessage(String roomId, TextMessage message, boolean isCorrect) {
         for (WebSocketSession session : roomSession.values()) {
             if (session.isOpen()) {
                 try {
-                    session.sendMessage(message);
+                    // Parse the original message to a JsonObject
+                    JsonObject jsonObject = new JsonParser().parse(message.getPayload()).getAsJsonObject();
+    
+                    // Add the isCorrect field to the JsonObject
+                    System.out.println(isCorrect);
+                    jsonObject.addProperty("isCorrect", isCorrect);
+    
+                    // Convert the JsonObject back to a string
+                    String modifiedMessage = jsonObject.toString();
+                    System.out.println(modifiedMessage);
+    
+                    // Send the modified message
+                    session.sendMessage(new TextMessage(modifiedMessage));
                 } catch (IOException e) {
                     System.err.println("Failed to send chat message to room member: " + e.getMessage());
                 }
