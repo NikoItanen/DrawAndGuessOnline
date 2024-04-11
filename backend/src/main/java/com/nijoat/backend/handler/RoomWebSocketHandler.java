@@ -19,6 +19,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.io.BufferedReader;
+import java.io.FileReader;
 
 @Component
 public class RoomWebSocketHandler extends TextWebSocketHandler {
@@ -26,7 +28,7 @@ public class RoomWebSocketHandler extends TextWebSocketHandler {
     private final ObjectMapper objectMapper;
 
     private final List<Message> messages = new ArrayList<>();
-    private List<String> gamewords = new ArrayList<>(Arrays.asList("get", "to", "the", "choppa", "aaa"));
+    private List<String> gamewords = new ArrayList<>();
     private String randWord;
     private boolean isCorrect;
     
@@ -37,10 +39,23 @@ public class RoomWebSocketHandler extends TextWebSocketHandler {
         gamewordsInitialize();
     }
 
+    public void readWordsFromFile(String filename) {
+        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                gamewords.add(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void gamewordsInitialize() {
+        readWordsFromFile("backend/src/main/java/com/nijoat/backend/handler/words.txt");
         Random rand = new Random();
         int index = rand.nextInt(gamewords.size());
         randWord = gamewords.get(index);
+        System.out.println(randWord);
     }
 
     public void afterConnectionEstablished(WebSocketSession session) throws IOException {
@@ -95,18 +110,14 @@ public class RoomWebSocketHandler extends TextWebSocketHandler {
         for (WebSocketSession session : roomSession.values()) {
             if (session.isOpen()) {
                 try {
-                    // Parse the original message to a JsonObject
                     JsonObject jsonObject = new JsonParser().parse(message.getPayload()).getAsJsonObject();
     
-                    // Add the isCorrect field to the JsonObject
                     System.out.println(isCorrect);
                     jsonObject.addProperty("isCorrect", isCorrect);
     
-                    // Convert the JsonObject back to a string
                     String modifiedMessage = jsonObject.toString();
                     System.out.println(modifiedMessage);
     
-                    // Send the modified message
                     session.sendMessage(new TextMessage(modifiedMessage));
                 } catch (IOException e) {
                     System.err.println("Failed to send chat message to room member: " + e.getMessage());
