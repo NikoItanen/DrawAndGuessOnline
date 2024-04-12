@@ -2,11 +2,14 @@ package com.nijoat.frontend.controller.drawing;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.TextField;
 import javafx.scene.control.CheckBox;
+
+import java.io.IOException;
 
 public class DrawingController {
 
@@ -21,6 +24,16 @@ public class DrawingController {
 
     @FXML
     private CheckBox eraser;
+
+    public DrawingController() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/nijoat/frontend/drawing-view.fxml"));
+        fxmlLoader.setController(this);
+        try {
+            fxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void initialize() {
         GraphicsContext gc = canvas.getGraphicsContext2D();
