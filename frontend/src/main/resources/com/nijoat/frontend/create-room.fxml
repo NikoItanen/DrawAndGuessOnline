@@ -13,7 +13,7 @@
       <font>
          <Font size="19.0" />
       </font></Label>
-    <TextField fx:id="roomNameField" alignment="CENTER" prefHeight="29.0" prefWidth="325.0" />
+    <TextField fx:id="roomNameInput" alignment="CENTER" prefHeight="29.0" prefWidth="325.0" />
    <BorderPane prefHeight="49.0" prefWidth="326.0">
       <center>
           <Button alignment="CENTER" contentDisplay="CENTER" onAction="#handleCreateRoom" prefHeight="30.0" prefWidth="138.0" text="Create" textAlignment="CENTER" BorderPane.alignment="CENTER">

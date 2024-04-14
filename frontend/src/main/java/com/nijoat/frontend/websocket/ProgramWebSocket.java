@@ -1,5 +1,6 @@
 package com.nijoat.frontend.websocket;
 
+import org.eclipse.jetty.util.IO;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.WebSocketListener;
 import java.io.IOException;
@@ -45,11 +46,17 @@ public class ProgramWebSocket implements WebSocketListener {
     }
 
     public void sendMessage(String message) {
+        System.out.println("viestin lähetystapahtuu");
         try {
-            if (session != null && session.isOpen()) {
+            if (message == null) {
+                System.err.println("Message is null. Cannot send.");
+                return;
+            }
+            assert session != null;
+            if (session.isOpen()) {
                 session.getRemote().sendString(message);
             }
-        } catch (IOException e) {
+        } catch (IOException e ) {
             e.printStackTrace();
         }
     }

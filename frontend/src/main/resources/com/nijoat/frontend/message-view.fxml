@@ -7,29 +7,29 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.TextFlow?>
 
-<VBox style="-fx-border-color: #D5B4B4;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nijoat.frontend.controller.messaging.MessageController">
+<VBox prefHeight="360.0" prefWidth="275.0" style="-fx-border-color: #D5B4B4;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nijoat.frontend.controller.messaging.MessageController">
    <children>
       <BorderPane prefHeight="542.0" prefWidth="273.0">
          <bottom>
             <VBox prefHeight="50.0" prefWidth="273.0" spacing="5.0" style="-fx-background-color: #E4D0D0;">
                <children>
                   <BorderPane prefHeight="64.0" prefWidth="273.0">
-                     <left>
+                     <top>
                         <BorderPane prefHeight="45.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                            <center>
                               <TextField fx:id="inputField" prefHeight="12.0" prefWidth="200.0" promptText="Send a message..." BorderPane.alignment="CENTER" />
                            </center>
+                           <right>
+                              <Button alignment="BOTTOM_CENTER" mnemonicParsing="false" onAction="#onButtonSend" text="Send" textFill="#ff7bc3" BorderPane.alignment="CENTER" />
+                           </right>
                         </BorderPane>
-                     </left>
-                     <right>
-                        <Button alignment="BOTTOM_CENTER" mnemonicParsing="false" onAction="#onButtonSend" text="Send" textFill="#ff7bc3" BorderPane.alignment="CENTER" />
-                     </right>
+                     </top>
                   </BorderPane>
                </children>
             </VBox>
          </bottom>
          <center>
-            <TextFlow fx:id="messageFlow" lineSpacing="10.0" prefHeight="530.0" prefWidth="273.0" style="-fx-background-color: #E4D0D0; -fx-border-color: #D5B4B4;" BorderPane.alignment="CENTER" />
+            <TextFlow fx:id="messageFlow" lineSpacing="10.0" prefHeight="475.0" prefWidth="566.0" style="-fx-background-color: #E4D0D0; -fx-border-color: #D5B4B4;" BorderPane.alignment="CENTER" />
          </center>
          <top>
             <BorderPane prefHeight="0.0" prefWidth="273.0" BorderPane.alignment="CENTER">

@@ -1,17 +1,18 @@
 package com.nijoat.frontend.controller.messaging;
 
 import com.google.gson.stream.JsonReader;
-import com.nijoat.frontend.websocket.ProgramWebSocket;
+import com.nijoat.frontend.controller.room.RoomController;
 import com.nijoat.frontend.util.UserSession;
 
+import com.nijoat.frontend.websocket.ProgramWebSocket;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextFlow;
 import javafx.scene.text.Text;
 
 import java.io.*;
-import java.net.URI;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -19,12 +20,7 @@ import com.google.gson.JsonParser;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 
-import org.eclipse.jetty.websocket.client.WebSocketClient;
-
 public class MessageController {
-
-    private WebSocketClient client;
-    private ProgramWebSocket socket;
 
     @FXML
     private TextField inputField;
@@ -32,21 +28,18 @@ public class MessageController {
     @FXML
     private TextFlow messageFlow;
 
+    private ProgramWebSocket socket;
 
-    public void initialize() {
-        client = new WebSocketClient();
-        try {
-            client.start();
-            URI echoUri = new URI("ws://localhost:8080/websocket/room");
-            socket = new ProgramWebSocket();
-            client.connect(socket, echoUri);
-            socket.setMessageHandler(this::processMessage);
-        } catch (Throwable t) {
-            t.printStackTrace();
-        }
+    private RoomController roomController;
+
+    public void setWebSocket(ProgramWebSocket socket) {
+        this.socket = socket;
     }
 
-    private void processMessage(String message) {
+    public ProgramWebSocket getWebSocket() {
+        return socket;
+    }
+    public void processMessage(String message) {
         try {
             JsonReader reader = new JsonReader(new StringReader(message));
             System.out.println(message);
@@ -75,22 +68,20 @@ public class MessageController {
 
 
     @FXML
-    private void onButtonSend(ActionEvent event) {
-        String message = inputField.getText();
-        if (!message.isEmpty()) {
-            JsonObject jsonMessage = new JsonObject();
-            jsonMessage.addProperty("sender", UserSession.getUsername());
-            jsonMessage.addProperty("content", message);
-            socket.sendMessage(jsonMessage.toString());
-            inputField.clear();
-        }
-    }
-
-    public void stop() {
-        try {
-            client.stop();
-        } catch (Exception e) {
-            e.printStackTrace();
+    protected void onButtonSend(ActionEvent event) {
+        System.out.println("painike painettu");
+        System.out.println("Painikkeen socket: " + getWebSocket());
+        if (getWebSocket() != null) {
+            String message = inputField.getText();
+            if (!message.isEmpty()) {
+                JsonObject jsonMessage = new JsonObject();
+                jsonMessage.addProperty("sender", UserSession.getUsername());
+                jsonMessage.addProperty("content", message);
+                socket.sendMessage(jsonMessage.toString());
+                inputField.clear();
+            }
+        } else {
+            System.out.println("WebSocket is null");
         }
     }
 }
