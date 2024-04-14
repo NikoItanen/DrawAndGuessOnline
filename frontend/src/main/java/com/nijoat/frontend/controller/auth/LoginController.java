@@ -10,7 +10,6 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
@@ -56,7 +55,7 @@ public class LoginController {
     private TextField usernameField;
 
     @FXML
-    private PasswordField passwordField;
+    private TextField passwordField;
 
     @FXML
     private Label statusLabel;

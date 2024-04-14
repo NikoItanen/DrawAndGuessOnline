@@ -33,11 +33,14 @@
 
     <BorderPane prefHeight="755.0" prefWidth="1240.0" style="-fx-background-color: #E4D0D0; -fx-border-color: #D5B4B4;">
       <right>
-         <BorderPane nodeOrientation="LEFT_TO_RIGHT" prefHeight="673.0" prefWidth="356.0" BorderPane.alignment="CENTER">
-            <bottom>
-                   <fx:include source="message-view.fxml" />
-            </bottom>
+         <BorderPane nodeOrientation="LEFT_TO_RIGHT" prefHeight="646.0" prefWidth="309.0" BorderPane.alignment="CENTER">
+            <center>
+                   <fx:include source="message-view.fxml" BorderPane.alignment="CENTER" />
+            </center>
          </BorderPane>
       </right>
+        <left>
+            <fx:include source="drawing-view.fxml" />
+        </left>
     </BorderPane>
 </VBox>

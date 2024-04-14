@@ -1,9 +1,9 @@
 package com.nijoat.frontend.controller.messaging;
 
 import com.google.gson.stream.JsonReader;
-import com.nijoat.frontend.websocket.ProgramWebSocket;
 import com.nijoat.frontend.util.UserSession;
 
+import com.nijoat.frontend.websocket.ChatWebSocket;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
@@ -18,13 +18,9 @@ import com.google.gson.JsonParser;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-
 import org.eclipse.jetty.websocket.client.WebSocketClient;
 
 public class MessageController {
-
-    private WebSocketClient client;
-    private ProgramWebSocket socket;
 
     @FXML
     private TextField inputField;
@@ -32,21 +28,24 @@ public class MessageController {
     @FXML
     private TextFlow messageFlow;
 
+    private ChatWebSocket socket;
+    private WebSocketClient client;
+
 
     public void initialize() {
         client = new WebSocketClient();
         try {
             client.start();
-            URI echoUri = new URI("ws://localhost:8080/websocket/room");
-            socket = new ProgramWebSocket();
-            client.connect(socket, echoUri);
+            URI echoURI = new URI("ws://localhost:8080/websocket/chat");
+            socket = new ChatWebSocket();
+            client.connect(socket, echoURI);
             socket.setMessageHandler(this::processMessage);
-        } catch (Throwable t) {
-            t.printStackTrace();
+        } catch (Throwable e) {
+            e.printStackTrace();
         }
     }
 
-    private void processMessage(String message) {
+    public void processMessage(String message) {
         try {
             JsonReader reader = new JsonReader(new StringReader(message));
             System.out.println(message);
@@ -75,18 +74,22 @@ public class MessageController {
 
 
     @FXML
-    private void onButtonSend(ActionEvent event) {
-        String message = inputField.getText();
-        if (!message.isEmpty()) {
-            JsonObject jsonMessage = new JsonObject();
-            jsonMessage.addProperty("sender", UserSession.getUsername());
-            jsonMessage.addProperty("content", message);
-            socket.sendMessage(jsonMessage.toString());
-            inputField.clear();
+    protected void onButtonSend(ActionEvent event) {
+        if (socket != null) {
+            String message = inputField.getText();
+            if (!message.isEmpty()) {
+                JsonObject jsonMessage = new JsonObject();
+                jsonMessage.addProperty("sender", UserSession.getUsername());
+                jsonMessage.addProperty("content", message);
+                socket.sendMessage(jsonMessage.toString());
+                inputField.clear();
+            }
+        } else {
+            System.out.println("WebSocket is null");
         }
     }
 
-    public void stop() {
+    public void closeChatWebSocket() {
         try {
             client.stop();
         } catch (Exception e) {

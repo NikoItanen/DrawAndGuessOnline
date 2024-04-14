@@ -1,8 +1,9 @@
 package com.nijoat.frontend.controller.menu;
 
+import com.nijoat.frontend.controller.messaging.MessageController;
 import com.nijoat.frontend.controller.room.CreateRoomController;
-import com.nijoat.frontend.util.UserSession;
-import com.nijoat.frontend.websocket.ProgramWebSocket;
+import com.nijoat.frontend.controller.room.RoomController;
+import com.nijoat.frontend.websocket.MenuWebSocket;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,27 +11,25 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URI;
-import java.util.Optional;
 
 import org.eclipse.jetty.websocket.client.WebSocketClient;
 
 public class MenuController {
 
     private WebSocketClient client;
-    private ProgramWebSocket socket;
+    private MenuWebSocket socket;
 
 
     public void initializeWebSocket() {
         client = new WebSocketClient();
         try {
             client.start();
-            URI echoUri = new URI("ws://localhost:8080/websocket/mainmenu");
-            socket = new ProgramWebSocket();
+            URI echoUri = new URI("ws://localhost:8080/websocket/menu");
+            socket = new MenuWebSocket();
             client.connect(socket, echoUri);
         } catch (Throwable t) {
             t.printStackTrace();
@@ -66,28 +65,36 @@ public class MenuController {
 
     @FXML
     protected void createRoom(ActionEvent event) {
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Create New Room");
-        dialog.setHeaderText("Enter Room Name:");
-        dialog.setContentText("Room Name:");
+        try {
+            FXMLLoader createRoomLoader = new FXMLLoader(getClass().getResource("/com/nijoat/frontend/create-room.fxml"));
+            Parent createRoomRoot = createRoomLoader.load();
+            CreateRoomController createRoomController = createRoomLoader.getController();
 
-        Optional<String> result = dialog.showAndWait();
+            createRoomController.setOnRoomCreated(roomName -> {
+                try {
+                    FXMLLoader roomLoader = new FXMLLoader(getClass().getResource("/com/nijoat/frontend/room-view.fxml"));
+                    Parent roomRoot = roomLoader.load();
+                    RoomController roomController = roomLoader.getController();
+                    FXMLLoader messageLoader = new FXMLLoader(getClass().getResource("/com/nijoat/frontend/message-view.fxml"));
+                    MessageController messageController = messageLoader.getController();
+                    roomController.initializeRoomWebSocket();
 
-        if (result.isPresent() && !result.get().isEmpty()) {
-            String roomName = result.get();
+                    roomController.setRoomName(roomName);
 
-            try {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/nijoat/frontend/create-room.fxml"));
-                Parent root = fxmlLoader.load();
+                    Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    currentStage.getScene().setRoot(roomRoot);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
 
-                CreateRoomController createRoomController = fxmlLoader.getController();
-                createRoomController.createRoom(roomName, event);
+            Stage createRoomStage = new Stage();
+            createRoomStage.setScene(new Scene(createRoomRoot));
+            createRoomStage.setTitle("Create New Room");
+            createRoomStage.show();
 
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            showAlert("Invalid Room Name", "Please enter a valid room name");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -102,9 +109,6 @@ public class MenuController {
 
     @FXML
     protected void testRoomButtonClick(ActionEvent event) {
-
-        System.out.println(UserSession.getUsername());
-
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/nijoat/frontend/game-view.fxml"));
             Parent root = fxmlLoader.load();
