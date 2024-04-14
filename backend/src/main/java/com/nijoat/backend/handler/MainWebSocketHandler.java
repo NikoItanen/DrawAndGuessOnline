@@ -17,7 +17,7 @@ public class MainWebSocketHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         sessions.add(session);
-        System.out.println("Yhteys muodostettu!");
+        System.out.println("Connection established!");
 
         sendMessage(session, "Welcome to the main menu!");
     }

@@ -1,24 +1,24 @@
 package com.nijoat.frontend.controller.messaging;
 
 import com.google.gson.stream.JsonReader;
-import com.nijoat.frontend.controller.room.RoomController;
 import com.nijoat.frontend.util.UserSession;
 
-import com.nijoat.frontend.websocket.ProgramWebSocket;
+import com.nijoat.frontend.websocket.ChatWebSocket;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextFlow;
 import javafx.scene.text.Text;
 
 import java.io.*;
+import java.net.URI;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import org.eclipse.jetty.websocket.client.WebSocketClient;
 
 public class MessageController {
 
@@ -28,17 +28,23 @@ public class MessageController {
     @FXML
     private TextFlow messageFlow;
 
-    private ProgramWebSocket socket;
+    private ChatWebSocket socket;
+    private WebSocketClient client;
 
-    private RoomController roomController;
 
-    public void setWebSocket(ProgramWebSocket socket) {
-        this.socket = socket;
+    public void initialize() {
+        client = new WebSocketClient();
+        try {
+            client.start();
+            URI echoURI = new URI("ws://localhost:8080/websocket/chat");
+            socket = new ChatWebSocket();
+            client.connect(socket, echoURI);
+            socket.setMessageHandler(this::processMessage);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
     }
 
-    public ProgramWebSocket getWebSocket() {
-        return socket;
-    }
     public void processMessage(String message) {
         try {
             JsonReader reader = new JsonReader(new StringReader(message));
@@ -69,9 +75,7 @@ public class MessageController {
 
     @FXML
     protected void onButtonSend(ActionEvent event) {
-        System.out.println("painike painettu");
-        System.out.println("Painikkeen socket: " + getWebSocket());
-        if (getWebSocket() != null) {
+        if (socket != null) {
             String message = inputField.getText();
             if (!message.isEmpty()) {
                 JsonObject jsonMessage = new JsonObject();
@@ -82,6 +86,14 @@ public class MessageController {
             }
         } else {
             System.out.println("WebSocket is null");
+        }
+    }
+
+    public void closeChatWebSocket() {
+        try {
+            client.stop();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

@@ -37,7 +37,7 @@
         <right>
             <BorderPane nodeOrientation="LEFT_TO_RIGHT" prefHeight="673.0" prefWidth="356.0" BorderPane.alignment="CENTER">
             <center>
-                    <fx:include source="message-view.fxml" />
+                    <fx:include source="message-view.fxml"/>
             </center>
             </BorderPane>
         </right>
@@ -68,7 +68,7 @@
             <bottom>
                <HBox prefHeight="120.0" prefWidth="582.0" BorderPane.alignment="CENTER">
                   <children>
-                     <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #c4c4c4; -fx-border-color: #969696;" text="Back to the menu">
+                     <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #c4c4c4; -fx-border-color: #969696;" text="Back to the menu" onAction="#onExitButtonClick">
                         <font>
                            <Font size="20.0" />
                         </font>

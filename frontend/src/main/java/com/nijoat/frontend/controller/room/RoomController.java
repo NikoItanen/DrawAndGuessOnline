@@ -1,7 +1,8 @@
 package com.nijoat.frontend.controller.room;
 
 import com.nijoat.frontend.controller.messaging.MessageController;
-import com.nijoat.frontend.websocket.ProgramWebSocket;
+import com.nijoat.frontend.websocket.MenuWebSocket;
+import com.nijoat.frontend.websocket.RoomWebSocket;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,21 +23,23 @@ public class RoomController {
     private Button exitButton;
 
     private WebSocketClient client;
-    private ProgramWebSocket socket;
-    private MessageController messageController;
+    private RoomWebSocket socket;
+
+    public void initializeRoomWebSocket() {
+        client = new WebSocketClient();
+        try {
+            client.start();
+            URI echoURI = new URI("ws://localhost:8080/websocket/room");
+            socket = new RoomWebSocket();
+            client.connect(socket, echoURI);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+    }
 
     public void setRoomName(String roomName) {
         roomNameLabel.setText(roomName);
     }
-
-    public ProgramWebSocket getRoomSocket() {
-        return socket;
-    }
-
-    public void setMessageController(MessageController messageController) {
-        this.messageController = messageController;
-    }
-
 
     @FXML
     protected void onExitButtonClick(ActionEvent event) {
@@ -50,21 +53,6 @@ public class RoomController {
             e.printStackTrace();
         }
     }
-
-    public void initializeRoomWebSocket() {
-        client = new WebSocketClient();
-        try {
-            client.start();
-            URI echoURI = new URI("ws://localhost:8080/websocket/room");
-            socket = new ProgramWebSocket();
-            messageController.setWebSocket(socket);
-            socket.setMessageHandler(message -> messageController.processMessage(message));
-            client.connect(socket, echoURI);
-        } catch (Throwable e) {
-            e.printStackTrace();
-        }
-    }
-
 
     public void closeRoomWebSocket() {
         try {

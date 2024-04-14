@@ -1,12 +1,11 @@
 package com.nijoat.frontend.websocket;
 
-import org.eclipse.jetty.util.IO;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.WebSocketListener;
 import java.io.IOException;
 import java.util.function.Consumer;
 
-public class ProgramWebSocket implements WebSocketListener {
+public class MenuWebSocket implements WebSocketListener {
 
     private Session session;
     private Consumer<String> messageHandler;
@@ -14,7 +13,7 @@ public class ProgramWebSocket implements WebSocketListener {
     @Override
     public void onWebSocketConnect(Session session) {
         this.session = session;
-        System.out.println("WebSocket connection opened!");
+        System.out.println("Menu WebSocket connection opened!");
     }
 
 
@@ -46,7 +45,6 @@ public class ProgramWebSocket implements WebSocketListener {
     }
 
     public void sendMessage(String message) {
-        System.out.println("viestin lähetystapahtuu");
         try {
             if (message == null) {
                 System.err.println("Message is null. Cannot send.");
