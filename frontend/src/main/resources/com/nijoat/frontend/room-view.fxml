@@ -98,7 +98,7 @@
                     </BorderPane>
                 </top>
             <center>
-                    <ListView prefHeight="606.0" prefWidth="492.0" style="-fx-background-color: #E4D0D0; -fx-border-color: #D5B4B4;" BorderPane.alignment="CENTER" />
+                    <ListView prefHeight="606.0" prefWidth="492.0" style="-fx-background-color: #E4D0D0; -fx-border-color: #D5B4B4;" BorderPane.alignment="CENTER" fx:id="userList" />
             </center>
             </BorderPane>
         </center>

@@ -27,6 +27,17 @@ import java.util.logging.Logger;
 public class LoginController {
     private static final Logger logger = Logger.getLogger(LoginController.class.getName());
 
+    @FXML
+    private TextField usernameField;
+
+    @FXML
+    private PasswordField passwordField;
+
+    @FXML
+    private Label statusLabel;
+
+    private static final String BASE_URL = "http://localhost:8080";
+
     public void showLoginWindow() throws IOException {
 
         Stage loginStage = new Stage();
@@ -49,17 +60,6 @@ public class LoginController {
         connection.setDoOutput(true);
         return new OutputStreamWriter(connection.getOutputStream());
     }
-
-    private static final String BASE_URL = "http://localhost:8080";
-
-    @FXML
-    private TextField usernameField;
-
-    @FXML
-    private PasswordField passwordField;
-
-    @FXML
-    private Label statusLabel;
 
 
     // Method to handle login button click

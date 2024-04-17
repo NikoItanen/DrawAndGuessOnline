@@ -1,6 +1,10 @@
 package com.nijoat.frontend.controller.room;
 
 import com.nijoat.frontend.controller.messaging.MessageController;
+import com.nijoat.frontend.model.Player;
+import com.nijoat.frontend.model.Room;
+import com.nijoat.frontend.model.User;
+import com.nijoat.frontend.util.UserSession;
 import com.nijoat.frontend.websocket.MenuWebSocket;
 import com.nijoat.frontend.websocket.RoomWebSocket;
 import javafx.event.ActionEvent;
@@ -10,6 +14,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import org.eclipse.jetty.websocket.client.WebSocketClient;
 
@@ -25,7 +30,14 @@ public class RoomController {
     private WebSocketClient client;
     private RoomWebSocket socket;
 
-    public void initializeRoomWebSocket() {
+    private Room room;
+    @FXML
+    private ListView<String> userList;
+
+
+    public void initializeRoomWebSocket(String roomName) {
+        this.room = new Room(roomName);
+        roomNameLabel.setText(room.getRoomName());
         client = new WebSocketClient();
         try {
             client.start();
@@ -35,10 +47,6 @@ public class RoomController {
         } catch (Throwable e) {
             e.printStackTrace();
         }
-    }
-
-    public void setRoomName(String roomName) {
-        roomNameLabel.setText(roomName);
     }
 
     @FXML
@@ -62,4 +70,17 @@ public class RoomController {
         }
     }
 
+
+    @FXML
+    public void showUserList() {
+        if (userList != null) {
+            userList.getItems().addAll(room.getConnectedPlayersNames());
+        } else {
+            System.err.println("userList is null");
+        }
+    }
+
+    public void addPlayerToRoom(Player player) {
+        room.addPlayer(player);
+    }
 }

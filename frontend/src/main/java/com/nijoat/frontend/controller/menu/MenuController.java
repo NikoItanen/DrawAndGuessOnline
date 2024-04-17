@@ -3,6 +3,9 @@ package com.nijoat.frontend.controller.menu;
 import com.nijoat.frontend.controller.messaging.MessageController;
 import com.nijoat.frontend.controller.room.CreateRoomController;
 import com.nijoat.frontend.controller.room.RoomController;
+import com.nijoat.frontend.model.Player;
+import com.nijoat.frontend.model.User;
+import com.nijoat.frontend.util.UserSession;
 import com.nijoat.frontend.websocket.MenuWebSocket;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -77,12 +80,13 @@ public class MenuController {
                     RoomController roomController = roomLoader.getController();
                     FXMLLoader messageLoader = new FXMLLoader(getClass().getResource("/com/nijoat/frontend/message-view.fxml"));
                     MessageController messageController = messageLoader.getController();
-                    roomController.initializeRoomWebSocket();
-
-                    roomController.setRoomName(roomName);
+                    roomController.initializeRoomWebSocket(roomName);
+                    Player hostUser = new Player(UserSession.getUsername());
+                    roomController.addPlayerToRoom(hostUser);
 
                     Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                     currentStage.getScene().setRoot(roomRoot);
+                    roomController.showUserList();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
