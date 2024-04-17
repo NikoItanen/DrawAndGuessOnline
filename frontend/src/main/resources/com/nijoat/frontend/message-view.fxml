@@ -32,11 +32,6 @@
             <TextFlow fx:id="messageFlow" lineSpacing="10.0" prefHeight="475.0" prefWidth="566.0" style="-fx-background-color: #E4D0D0; -fx-border-color: #D5B4B4;" BorderPane.alignment="CENTER" />
          </center>
          <top>
-            <BorderPane prefHeight="0.0" prefWidth="273.0" BorderPane.alignment="CENTER">
-               <top>
-                  <Label alignment="CENTER" prefHeight="0.0" prefWidth="142.0" text="Draw And Guess" BorderPane.alignment="CENTER" />
-               </top>
-            </BorderPane>
          </top>
       </BorderPane>
    </children>

@@ -3,6 +3,7 @@ package com.nijoat.backend.config;
 import com.nijoat.backend.handler.ChatWebSocketHandler;
 import com.nijoat.backend.handler.MainWebSocketHandler;
 import com.nijoat.backend.handler.RoomWebSocketHandler;
+import com.nijoat.backend.handler.GameWebSocketHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
@@ -17,12 +18,14 @@ public class WebSocketConfig implements WebSocketConfigurer {
     private final MainWebSocketHandler menuWebSocketHandler;
     private final RoomWebSocketHandler roomWebSocketHandler;
     private final ChatWebSocketHandler chatWebSocketHandler;
+    private final GameWebSocketHandler gameWebSocketHandler;
 
     @Autowired
-    public WebSocketConfig(MainWebSocketHandler MenuWebSocketHandler, RoomWebSocketHandler roomWebSocketHandler, ChatWebSocketHandler chatWebSocketHandler) {
+    public WebSocketConfig(MainWebSocketHandler MenuWebSocketHandler, RoomWebSocketHandler roomWebSocketHandler, ChatWebSocketHandler chatWebSocketHandler, GameWebSocketHandler gameWebSocketHandler) {
         this.menuWebSocketHandler = MenuWebSocketHandler;
         this.roomWebSocketHandler = roomWebSocketHandler;
         this.chatWebSocketHandler = chatWebSocketHandler;
+        this.gameWebSocketHandler = gameWebSocketHandler;
     }
 
     @Override
@@ -30,6 +33,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
         registry.addHandler(menuWebSocketHandler, "/websocket/menu").setAllowedOrigins("*");
         registry.addHandler(roomWebSocketHandler, "/websocket/room").setAllowedOrigins("*");
         registry.addHandler(chatWebSocketHandler, "/websocket/chat").setAllowedOrigins("*");
+        registry.addHandler(gameWebSocketHandler, "/websocket/game").setAllowedOrigins("*");
     }
 
 }

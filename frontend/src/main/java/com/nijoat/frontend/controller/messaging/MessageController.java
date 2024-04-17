@@ -5,6 +5,7 @@ import com.nijoat.frontend.util.UserSession;
 
 import com.nijoat.frontend.websocket.ChatWebSocket;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextFlow;
@@ -28,6 +29,9 @@ public class MessageController {
     @FXML
     private TextFlow messageFlow;
 
+    @FXML
+    private Label gamewordText;
+
     private ChatWebSocket socket;
     private WebSocketClient client;
 
@@ -47,8 +51,8 @@ public class MessageController {
 
     public void processMessage(String message) {
         try {
-            JsonReader reader = new JsonReader(new StringReader(message));
             System.out.println(message);
+            JsonReader reader = new JsonReader(new StringReader(message));
             reader.setLenient(true);
             JsonObject jsonObject = new JsonParser().parse(reader).getAsJsonObject();
 

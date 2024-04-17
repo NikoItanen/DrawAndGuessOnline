@@ -2,10 +2,11 @@ package com.nijoat.frontend.websocket;
 
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.WebSocketListener;
+
 import java.io.IOException;
 import java.util.function.Consumer;
 
-public class ChatWebSocket implements WebSocketListener {
+public class GameWebSocket implements WebSocketListener {
 
     private Session session;
     private Consumer<String> messageHandler;
@@ -13,9 +14,8 @@ public class ChatWebSocket implements WebSocketListener {
     @Override
     public void onWebSocketConnect(Session session) {
         this.session = session;
-        System.out.println("Chat WebSocket connection opened!");
+        System.out.println("Game WebSocket connection opened!");
     }
-
 
     @Override
     public void onWebSocketBinary(byte[] bytes, int i, int i1) {
@@ -63,11 +63,5 @@ public class ChatWebSocket implements WebSocketListener {
         if (session != null) {
             session.close();
         }
-    }
-
-
-    public void setMessageHandler(Object handler) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setMessageHandler'");
     }
 }
