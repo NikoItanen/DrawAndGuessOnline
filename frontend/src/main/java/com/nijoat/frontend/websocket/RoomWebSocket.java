@@ -44,4 +44,23 @@ public class RoomWebSocket implements WebSocketListener {
     public void onWebSocketText(String s) {
 
     }
+
+    public void sendMessage(String message) {
+        try {
+            if (message == null) {
+                System.err.println("Message is null. Cannot send.");
+                return;
+            }
+            assert session != null;
+            if (session.isOpen()) {
+                session.getRemote().sendString(message);
+            }
+        } catch (IOException e ) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean isConnected() {
+        return session != null && session.isOpen();
+    }
 }

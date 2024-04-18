@@ -81,9 +81,9 @@ public class MenuController {
                     FXMLLoader messageLoader = new FXMLLoader(getClass().getResource("/com/nijoat/frontend/message-view.fxml"));
                     MessageController messageController = messageLoader.getController();
                     roomController.initializeRoomWebSocket(roomName);
+
                     Player hostUser = new Player(UserSession.getUsername());
                     roomController.addPlayerToRoom(hostUser);
-
                     Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                     currentStage.getScene().setRoot(roomRoot);
                     roomController.showUserList();

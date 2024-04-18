@@ -5,15 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="720f8a2f-052c-4ba5-ae0c-c00fb633db99" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/frontend/src/main/java/com/nijoat/frontend/model/Player.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/main/java/com/nijoat/frontend/model/Room.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/nijoat/backend/model/Room.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/nijoat/backend/handler/RoomWebSocketHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/nijoat/backend/handler/RoomWebSocketHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/main/java/com/nijoat/frontend/controller/auth/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main/java/com/nijoat/frontend/controller/auth/LoginController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/main/java/com/nijoat/frontend/controller/menu/MenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main/java/com/nijoat/frontend/controller/menu/MenuController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/main/java/com/nijoat/frontend/controller/room/RoomController.java" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main/java/com/nijoat/frontend/controller/room/RoomController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/main/java/com/nijoat/frontend/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main/java/com/nijoat/frontend/model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/main/resources/com/nijoat/frontend/room-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main/resources/com/nijoat/frontend/room-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/main/java/com/nijoat/frontend/controller/room/RoomListController.java" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main/java/com/nijoat/frontend/controller/room/RoomListController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/main/java/com/nijoat/frontend/websocket/RoomWebSocket.java" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main/java/com/nijoat/frontend/websocket/RoomWebSocket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/main/resources/com/nijoat/frontend/roomlist-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main/resources/com/nijoat/frontend/roomlist-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

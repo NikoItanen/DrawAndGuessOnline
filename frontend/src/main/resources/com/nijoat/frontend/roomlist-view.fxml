@@ -12,7 +12,7 @@
     </padding>
    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Find Lobbies" />
 
-    <ListView fx:id="userList" VBox.vgrow="ALWAYS">
+    <ListView fx:id="roomList" VBox.vgrow="ALWAYS">
     </ListView>
 
     <Button fx:id="joinButton" onAction="#onJoinButtonClick" text="Join Game" />

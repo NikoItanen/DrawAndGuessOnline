@@ -20,6 +20,7 @@ import org.eclipse.jetty.websocket.client.WebSocketClient;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.concurrent.TimeUnit;
 
 public class RoomController {
     @FXML
@@ -43,7 +44,12 @@ public class RoomController {
             client.start();
             URI echoURI = new URI("ws://localhost:8080/websocket/room");
             socket = new RoomWebSocket();
-            client.connect(socket, echoURI);
+
+            client.connect(socket, echoURI).get(5000, TimeUnit.MILLISECONDS);
+
+            if (socket.isConnected()) {
+                socket.sendMessage(roomName);
+            }
         } catch (Throwable e) {
             e.printStackTrace();
         }
