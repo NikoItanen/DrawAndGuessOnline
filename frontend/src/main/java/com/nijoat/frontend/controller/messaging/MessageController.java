@@ -1,6 +1,7 @@
 package com.nijoat.frontend.controller.messaging;
 
-import com.google.gson.stream.JsonReader;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.nijoat.frontend.util.UserSession;
 
 import com.nijoat.frontend.websocket.ChatWebSocket;
@@ -14,8 +15,8 @@ import javafx.scene.text.Text;
 import java.io.*;
 import java.net.URI;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -52,13 +53,12 @@ public class MessageController {
     public void processMessage(String message) {
         try {
             System.out.println(message);
-            JsonReader reader = new JsonReader(new StringReader(message));
-            reader.setLenient(true);
-            JsonObject jsonObject = new JsonParser().parse(reader).getAsJsonObject();
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode jsonObject = objectMapper.readTree(message);
 
-            String sender = jsonObject.get("sender").getAsString();
-            String content = jsonObject.get("content").getAsString();
-            boolean isCorrect = jsonObject.get("isCorrect").getAsBoolean();
+            String sender = jsonObject.get("sender").asText();
+            String content = jsonObject.get("content").asText();
+            boolean isCorrect = jsonObject.get("isCorrect").asBoolean();
             System.out.println(isCorrect);
 
             Platform.runLater(() -> {
@@ -78,13 +78,14 @@ public class MessageController {
 
 
     @FXML
-    protected void onButtonSend(ActionEvent event) {
+    protected void onButtonSend(ActionEvent event) throws JsonProcessingException {
         if (socket != null) {
             String message = inputField.getText();
             if (!message.isEmpty()) {
-                JsonObject jsonMessage = new JsonObject();
-                jsonMessage.addProperty("sender", UserSession.getUsername());
-                jsonMessage.addProperty("content", message);
+                ObjectMapper objectMapper = new ObjectMapper();
+                ObjectNode jsonMessage = objectMapper.createObjectNode();
+                jsonMessage.put("sender", UserSession.getUsername());
+                jsonMessage.put("content", message);
                 socket.sendMessage(jsonMessage.toString());
                 inputField.clear();
             }

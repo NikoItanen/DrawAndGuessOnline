@@ -5,16 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="720f8a2f-052c-4ba5-ae0c-c00fb633db99" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/nijoat/backend/model/Room.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/nijoat/backend/handler/RoomWebSocketHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/nijoat/backend/handler/RoomWebSocketHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/main/java/com/nijoat/frontend/controller/menu/MenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main/java/com/nijoat/frontend/controller/menu/MenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/main/java/com/nijoat/frontend/controller/room/RoomController.java" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main/java/com/nijoat/frontend/controller/room/RoomController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/main/java/com/nijoat/frontend/controller/room/RoomListController.java" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main/java/com/nijoat/frontend/controller/room/RoomListController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/main/java/com/nijoat/frontend/websocket/RoomWebSocket.java" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main/java/com/nijoat/frontend/websocket/RoomWebSocket.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/main/resources/com/nijoat/frontend/roomlist-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main/resources/com/nijoat/frontend/roomlist-view.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/nijoat/backend/handler/ChatWebSocketHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/nijoat/backend/handler/ChatWebSocketHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/nijoat/backend/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/nijoat/backend/controller/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/main/java/com/nijoat/frontend/controller/auth/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main/java/com/nijoat/frontend/controller/auth/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/main/java/com/nijoat/frontend/controller/messaging/MessageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main/java/com/nijoat/frontend/controller/messaging/MessageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main/java/module-info.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,36 +43,36 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Application.App.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Application.executor&quot;: &quot;Run&quot;,
-    &quot;Application.BackendApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Application.BackendServer.executor&quot;: &quot;Run&quot;,
-    &quot;Application.FrontendServer.executor&quot;: &quot;Run&quot;,
-    &quot;Application.HelloApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.frontend [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.frontend [install].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;17&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/itane.DESKTOP-D9VU66U/Documents/GitHub/DrawAndGuessOnline/frontend/src/main/resources/com/nijoat/frontend&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.IDE.editor.colors.Rainbow Brackets&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Application.App.executor": "Run",
+    "Application.Application.executor": "Run",
+    "Application.BackendApplication.executor": "Run",
+    "Application.BackendServer.executor": "Run",
+    "Application.FrontendServer.executor": "Run",
+    "Application.HelloApplication.executor": "Run",
+    "Application.Main.executor": "Run",
+    "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
+    "Maven.frontend [clean].executor": "Run",
+    "Maven.frontend [install].executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "jdk.selected.JAVA_MODULE": "17",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/itane.DESKTOP-D9VU66U/Documents/GitHub/DrawAndGuessOnline",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors.Rainbow Brackets"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\itane.DESKTOP-D9VU66U\Documents\GitHub\DrawAndGuessOnline\frontend\src\main\resources\com\nijoat\frontend" />
@@ -188,5 +184,8 @@
         <watch expression="this" language="JAVA" />
       </configuration>
     </watches-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/DrawAndGuessOnline$Main.ic" NAME="Main Coverage Results" MODIFIED="1713453177374" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

@@ -45,12 +45,20 @@ public class AuthController {
         String username = user.getUsername();
         String password = user.getPassword();
 
+        if (username == null || password == null || username.isEmpty() || password.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username or password cannot be empty");
+        }
+
         User existingUser = userRepository.findByUsername(username);
 
-        if (existingUser == null || !passwordEncoder.matches(password, existingUser.getPassword())) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
-
+        if (existingUser == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not found");
         }
+
+        if (!passwordEncoder.matches(password, existingUser.getPassword())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+        }
+
         return ResponseEntity.ok("Login Successful!");
     }
 }

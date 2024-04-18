@@ -5,13 +5,13 @@ module com.nijoat.frontend {
     requires org.controlsfx.controls;
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
-    requires com.almasb.fxgl.all;
-    requires com.google.gson;
     requires org.eclipse.jetty.websocket.client;
     requires org.eclipse.jetty.websocket.api;
     requires org.eclipse.jetty.util;
     requires org.eclipse.jetty.websocket.common;
     requires javafx.graphics;
+    requires com.fasterxml.jackson.databind;
+    requires java.logging;
 
     opens com.nijoat.frontend to javafx.fxml;
     opens com.nijoat.frontend.model to com.google.gson;

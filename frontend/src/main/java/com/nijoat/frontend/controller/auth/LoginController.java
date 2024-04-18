@@ -1,10 +1,10 @@
 package com.nijoat.frontend.controller.auth;
-import com.google.gson.JsonObject;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.nijoat.frontend.controller.menu.MenuController;
 import com.nijoat.frontend.model.User;
 import com.nijoat.frontend.util.UserSession;
 
-import com.google.gson.Gson;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -18,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -74,11 +75,13 @@ public class LoginController {
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json");
+            connection.setDoOutput(true);
 
-
-            try (OutputStreamWriter writer = createOutputStreamWriter(connection)) {
-                Gson gson = new Gson();
-                String jsonBody = gson.toJson(new User(username, password));
+            ObjectMapper objectMapper = new ObjectMapper();
+            String jsonBody = objectMapper.writeValueAsString(new User(username, password));
+            
+            try (OutputStream outputStream = connection.getOutputStream();
+                 OutputStreamWriter writer = new OutputStreamWriter(outputStream)){
 
                 writer.write(jsonBody);
                 writer.flush();
@@ -132,9 +135,10 @@ public class LoginController {
 
             connection.setRequestProperty("Content-Type", "application/json");
 
-            JsonObject requestBodyJson = new JsonObject();
-            requestBodyJson.addProperty("username", username);
-            requestBodyJson.addProperty("password", password);
+            ObjectMapper objectMapper = new ObjectMapper();
+            ObjectNode requestBodyJson = objectMapper.createObjectNode();
+            requestBodyJson.put("username", username);
+            requestBodyJson.put("password", password);
 
             try (OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream())) {
                 writer.write(requestBodyJson.toString());
