@@ -40,7 +40,7 @@ public class RoomWebSocketHandler extends TextWebSocketHandler {
     }
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-        String roomId = extractRoomIdFromSession(session);
+        String roomId = GenerateRandomRoomId(session);
         roomSession.remove(roomId);
         System.out.println("WebSocket connection closed for room!");
     }

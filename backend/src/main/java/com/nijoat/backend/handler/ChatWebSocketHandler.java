@@ -65,7 +65,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         String roomId = extractRoomIdFromSession(session);
         roomSession.remove(roomId);
-        System.out.println("WebSocket connection closed for room!");
+        System.out.println("WebSocket connection closed for chat!");
     }
 
     public String extractRoomIdFromSession(WebSocketSession session) {

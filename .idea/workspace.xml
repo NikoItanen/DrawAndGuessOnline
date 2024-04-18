@@ -13,6 +13,8 @@
       <change beforePath="$PROJECT_DIR$/frontend/src/main/java/com/nijoat/frontend/controller/room/RoomListController.java" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main/java/com/nijoat/frontend/controller/room/RoomListController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/main/java/com/nijoat/frontend/websocket/RoomWebSocket.java" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main/java/com/nijoat/frontend/websocket/RoomWebSocket.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/main/resources/com/nijoat/frontend/roomlist-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main/resources/com/nijoat/frontend/roomlist-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/nijoat/backend/handler/ChatWebSocketHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/nijoat/backend/handler/ChatWebSocketHandler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
