@@ -27,48 +27,39 @@ public class DrawingController {
     @FXML
     private Slider brushSizeSlider;
 
+    private GraphicsContext gc;  // Store GraphicsContext as a field to reuse in multiple methods
+
     public void initialize() {
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.setFill(Color.WHITE);
-        gc.fillRect(0,0,canvas.getHeight(), canvas.getWidth());
+        gc = canvas.getGraphicsContext2D();
+        clearCanvas();  // Clear the canvas at initialization
 
         double initialBrushSize = Double.parseDouble(brushSize.getText());
         brushSizeSlider.setValue(initialBrushSize);
 
         brushSizeSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
             brushSize.setText(String.format("%.0f", newValue.doubleValue()));
-            double size = newValue.doubleValue();
         });
 
-        canvas.setOnMouseClicked(e -> {
-            double size = brushSizeSlider.getValue();
-            gc.setFill(colorPicker.getValue());
-
-            if (eraser.isSelected()) {
-                gc.setFill(Color.WHITE);
-                gc.fillRect(e.getX() - size / 2, e.getY() - size / 2, size, size);
-            } else {
-                gc.setFill(colorPicker.getValue());
-                gc.fillRect(e.getX() - size / 2, e.getY() - size / 2, size, size);
-            }
-        });
-
-
-        canvas.setOnMouseDragged(e -> {
-            double size = brushSizeSlider.getValue();
-            gc.setFill(colorPicker.getValue());
-
-            if (eraser.isSelected()) {
-                gc.setFill(Color.WHITE);
-                gc.fillRect(e.getX() - size / 2, e.getY() - size / 2, size, size);
-            } else {
-                gc.setFill(colorPicker.getValue());
-                gc.fillRect(e.getX() - size / 2, e.getY() - size / 2, size, size);
-            }
-        });
+        canvas.setOnMouseClicked(e -> drawOrErase(e.getX(), e.getY(), brushSizeSlider.getValue()));
+        canvas.setOnMouseDragged(e -> drawOrErase(e.getX(), e.getY(), brushSizeSlider.getValue()));
     }
 
-        public void onExit () {
-            Platform.exit();
+    private void drawOrErase(double x, double y, double size) {
+        if (eraser.isSelected()) {
+            gc.setFill(Color.WHITE);  // Set to erase (white)
+        } else {
+            gc.setFill(colorPicker.getValue());  // Set to draw with selected color
         }
+        gc.fillRect(x - size / 2, y - size / 2, size, size);
     }
+
+    @FXML
+    private void clearCanvas() {
+        gc.setFill(Color.WHITE);  // Set color to white for clearing
+        gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());  // Fill the entire canvas
+    }
+
+    public void onExit() {
+        Platform.exit();
+    }
+}
