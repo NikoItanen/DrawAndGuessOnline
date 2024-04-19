@@ -70,18 +70,22 @@ public class DrawingController {
     }
 
     public void processMessage(String message) {
-        System.out.println(message);
         Platform.runLater(() -> {
+
             try {
-                ObjectMapper objectMapper = new ObjectMapper();
-                JsonNode rootNode = objectMapper.readTree(message);
+                if (message.equals("clear")) {
+                    clearCanvas();
+                } else {
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    JsonNode rootNode = objectMapper.readTree(message);
 
-                double x = rootNode.get("x").asDouble();
-                double y = rootNode.get("y").asDouble();
-                double size = rootNode.get("size").asDouble();
-                Color color = Color.web(rootNode.get("color").asText());
+                    double x = rootNode.get("x").asDouble();
+                    double y = rootNode.get("y").asDouble();
+                    double size = rootNode.get("size").asDouble();
+                    Color color = Color.web(rootNode.get("color").asText());
 
-                draw(x, y, size, color);
+                    draw(x, y, size, color);
+                }
             } catch (Exception e) {
                 System.err.println("Error processing message: " + e.getMessage());
             }
@@ -135,10 +139,13 @@ public class DrawingController {
         }
     }
 
-    @FXML
     private void clearCanvas() {
         gc.setFill(Color.WHITE);
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+    }
+    @FXML
+    private void sendClearCanvas() {
+        socket.sendMessage("clear");
     }
 
     public void onExit() {

@@ -6,8 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="720f8a2f-052c-4ba5-ae0c-c00fb633db99" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/main/java/com/nijoat/frontend/controller/room/RoomController.java" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main/java/com/nijoat/frontend/controller/room/RoomController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/main/resources/com/nijoat/frontend/room-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main/resources/com/nijoat/frontend/room-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/nijoat/backend/handler/DrawingWebSocketHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/nijoat/backend/handler/DrawingWebSocketHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/main/java/com/nijoat/frontend/controller/drawing/DrawingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main/java/com/nijoat/frontend/controller/drawing/DrawingController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/main/resources/com/nijoat/frontend/drawing-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main/resources/com/nijoat/frontend/drawing-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -42,6 +42,9 @@ public class DrawingWebSocketHandler extends TextWebSocketHandler {
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         String receivedMessage = message.getPayload();
+        if (receivedMessage.equals("clear")) {
+            sendMessageToAllSessions(receivedMessage);
+        }
         sendMessageToAllSessions(receivedMessage);
     }
     

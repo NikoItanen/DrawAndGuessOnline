@@ -25,7 +25,7 @@
                         <Label text="Brush Size" />
                         <Slider fx:id="brushSizeSlider" max="50" min="1" value="12" />
                         <TextField fx:id="brushSize" prefHeight="25.0" prefWidth="31.0" text="18" />
-                        <Button onAction="#clearCanvas" text="Clear All" />
+                        <Button onAction="#sendClearCanvas" text="Clear All" />
                     </HBox>            
                 </items>
             </ToolBar>
