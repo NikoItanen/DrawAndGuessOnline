@@ -62,6 +62,7 @@ public class RoomController {
             Parent root = fxmlLoader.load();
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             currentStage.getScene().setRoot(root);
+
             closeRoomWebSocket();
         } catch (IOException e) {
             e.printStackTrace();

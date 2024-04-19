@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" spacing="20.0" style="-fx-background-color: #F5EBEB;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nijoat.frontend.controller.room.RoomController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" spacing="20.0" style="-fx-background-color: #F5EBEB;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nijoat.frontend.controller.room.RoomController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -33,18 +33,18 @@
         </left>
     </BorderPane>
 
-    <BorderPane prefHeight="755.0" prefWidth="1240.0" style="-fx-background-color: #E4D0D0; -fx-border-color: #D5B4B4;">
+    <BorderPane prefHeight="582.0" prefWidth="1240.0" style="-fx-background-color: #E4D0D0; -fx-border-color: #D5B4B4;">
         <right>
             <BorderPane nodeOrientation="LEFT_TO_RIGHT" prefHeight="673.0" prefWidth="356.0" BorderPane.alignment="CENTER">
             <center>
-                    <fx:include source="message-view.fxml"/>
+                    <fx:include source="message-view.fxml" />
             </center>
             </BorderPane>
         </right>
         <left>
-            <BorderPane prefHeight="646.0" prefWidth="596.0" BorderPane.alignment="CENTER">
+            <BorderPane prefHeight="620.0" prefWidth="596.0" BorderPane.alignment="CENTER">
             <top>
-               <VBox prefHeight="519.0" prefWidth="596.0" BorderPane.alignment="CENTER">
+               <VBox prefHeight="459.0" prefWidth="596.0" BorderPane.alignment="CENTER">
                   <children>
                      <Text fill="#867070" strokeType="OUTSIDE" strokeWidth="0.0" text="Roomname:" wrappingWidth="145.685546875">
                         <font>
@@ -68,7 +68,7 @@
             <bottom>
                <HBox prefHeight="120.0" prefWidth="582.0" BorderPane.alignment="CENTER">
                   <children>
-                     <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #c4c4c4; -fx-border-color: #969696;" text="Back to the menu" onAction="#onExitButtonClick">
+                     <Button mnemonicParsing="false" onAction="#onExitButtonClick" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #c4c4c4; -fx-border-color: #969696;" text="Back to the menu">
                         <font>
                            <Font size="20.0" />
                         </font>
@@ -98,7 +98,7 @@
                     </BorderPane>
                 </top>
             <center>
-                    <ListView prefHeight="606.0" prefWidth="492.0" style="-fx-background-color: #E4D0D0; -fx-border-color: #D5B4B4;" BorderPane.alignment="CENTER" fx:id="userList" />
+                    <ListView fx:id="userList" prefHeight="606.0" prefWidth="492.0" style="-fx-background-color: #E4D0D0; -fx-border-color: #D5B4B4;" BorderPane.alignment="CENTER" />
             </center>
             </BorderPane>
         </center>

@@ -37,6 +37,9 @@ public class LoginController {
     @FXML
     private Label statusLabel;
 
+    private static final double WINDOW_WIDTH = 1280;
+    private static final double WINDOW_HEIGHT = 720;
+
     private static final String BASE_URL = "http://localhost:8080";
 
     public void showLoginWindow() throws IOException {
@@ -44,14 +47,12 @@ public class LoginController {
         Stage loginStage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/nijoat/frontend/login-view.fxml"));
 
-        double screenWidth = Screen.getPrimary().getVisualBounds().getWidth() * 0.75;
-        double screenHeight = Screen.getPrimary().getVisualBounds().getHeight() * 0.75;
-        loginStage.setMinHeight(screenHeight);
-        loginStage.setMinWidth(screenWidth);
-        loginStage.setMaxHeight(screenHeight);
-        loginStage.setMaxWidth(screenWidth);
+        loginStage.setMinHeight(WINDOW_HEIGHT);
+        loginStage.setMinWidth(WINDOW_WIDTH);
+        loginStage.setMaxHeight(WINDOW_HEIGHT);
+        loginStage.setMaxWidth(WINDOW_WIDTH);
 
-        Scene scene = new Scene(fxmlLoader.load(), screenWidth, screenHeight);
+        Scene scene = new Scene(fxmlLoader.load(), WINDOW_WIDTH, WINDOW_HEIGHT);
         loginStage.setScene(scene);
         loginStage.setTitle("DrawAndGuess Online");
         loginStage.show();
@@ -79,7 +80,7 @@ public class LoginController {
 
             ObjectMapper objectMapper = new ObjectMapper();
             String jsonBody = objectMapper.writeValueAsString(new User(username, password));
-            
+
             try (OutputStream outputStream = connection.getOutputStream();
                  OutputStreamWriter writer = new OutputStreamWriter(outputStream)){
 

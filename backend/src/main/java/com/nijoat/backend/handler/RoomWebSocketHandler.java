@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nijoat.backend.model.Message;
 import com.nijoat.backend.model.Room;
+import com.nijoat.backend.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
@@ -22,13 +23,16 @@ import java.util.Random;
 public class RoomWebSocketHandler extends TextWebSocketHandler {
     private final Map<String, WebSocketSession> roomSession = new HashMap<>();
     private final ObjectMapper objectMapper;
-
+    private final RoomService roomService;
     private Room room;
 
 
+
+
     @Autowired
-    public RoomWebSocketHandler(ObjectMapper objectMapper) {
+    public RoomWebSocketHandler(ObjectMapper objectMapper, RoomService roomService) {
         this.objectMapper = objectMapper;
+        this.roomService = roomService;
     }
 
     @Override
@@ -36,6 +40,7 @@ public class RoomWebSocketHandler extends TextWebSocketHandler {
         String roomId = GenerateRandomRoomId(session);
         roomSession.put(roomId, session);
         room = new Room(roomId);
+        roomService.addRoom(room);
         System.out.println("New Websocket connection established for room: " + roomId);
     }
     @Override
@@ -43,6 +48,7 @@ public class RoomWebSocketHandler extends TextWebSocketHandler {
         String roomId = GenerateRandomRoomId(session);
         roomSession.remove(roomId);
         System.out.println("WebSocket connection closed for room!");
+        roomService.removeRoom(room);
     }
 
     public String GenerateRandomRoomId(WebSocketSession session) {

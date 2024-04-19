@@ -12,9 +12,10 @@ module com.nijoat.frontend {
     requires javafx.graphics;
     requires com.fasterxml.jackson.databind;
     requires java.logging;
+    requires java.net.http;
 
     opens com.nijoat.frontend to javafx.fxml;
-    opens com.nijoat.frontend.model to com.google.gson;
+    opens com.nijoat.frontend.model to com.fasterxml.jackson.databind;
 
     exports com.nijoat.frontend;
     exports com.nijoat.frontend.controller.auth;
