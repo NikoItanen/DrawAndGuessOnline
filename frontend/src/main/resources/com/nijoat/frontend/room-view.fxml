@@ -76,7 +76,7 @@
                            <Insets left="75.0" top="25.0" />
                         </HBox.margin>
                      </Button>
-                     <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="188.0" style="-fx-border-color: #969696; -fx-background-color: #c4c4c4;" text="Start Game" textOverrun="CLIP">
+                     <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="188.0" style="-fx-border-color: #969696; -fx-background-color: #c4c4c4;" text="Start Game" textOverrun="CLIP" onAction="#onStartGameClick">
                         <font>
                            <Font size="20.0" />
                         </font>
