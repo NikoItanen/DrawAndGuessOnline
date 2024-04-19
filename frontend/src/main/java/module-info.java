@@ -13,6 +13,7 @@ module com.nijoat.frontend {
     requires com.fasterxml.jackson.databind;
     requires java.logging;
     requires java.net.http;
+    requires com.fasterxml.jackson.core;
 
     opens com.nijoat.frontend to javafx.fxml;
     opens com.nijoat.frontend.model to com.fasterxml.jackson.databind;

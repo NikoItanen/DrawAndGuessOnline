@@ -45,7 +45,7 @@
          </BorderPane>
       </right>
         <left>
-            <fx:include source="drawing-view.fxml" />
+            <fx:include fx:id="drawingController" source="drawing-view.fxml" />
         </left>
     </BorderPane>
 </VBox>
