@@ -52,7 +52,6 @@ public class MessageController {
 
     public void processMessage(String message) {
         try {
-            System.out.println(message);
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode jsonObject = objectMapper.readTree(message);
 

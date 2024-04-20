@@ -21,7 +21,7 @@ import java.util.Map;
 @Component
 public class ChatWebSocketHandler extends TextWebSocketHandler {
 
-    private final Map<String, WebSocketSession> roomSession = new HashMap<>();
+    private final Map<String, List<WebSocketSession>> roomSessions = new HashMap<>();
     private ObjectMapper objectMapper;
 
     private final List<Message> messages = new ArrayList<>();
@@ -37,7 +37,10 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 
     public void afterConnectionEstablished(WebSocketSession session) throws IOException {
         String roomId = extractRoomIdFromSession(session);
-        roomSession.put(roomId, session);
+        if (!roomSessions.containsKey(roomId)) {
+            roomSessions.put(roomId, new ArrayList<>());
+        }
+        roomSessions.get(roomId).add(session);
         System.out.println("New Websocket connection established for room: " + roomId);
     }
 
@@ -64,8 +67,10 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         String roomId = extractRoomIdFromSession(session);
-        roomSession.remove(roomId);
-        System.out.println("WebSocket connection closed for chat!");
+        if (roomSessions.containsKey(roomId)) {
+            roomSessions.get(roomId).remove(session);
+            System.out.println("WebSocket connection closed for chat!");
+        }
     }
 
     public String extractRoomIdFromSession(WebSocketSession session) {
@@ -73,20 +78,19 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     }
 
     private void broadcastChatMessage(String roomId, TextMessage message, boolean isCorrect) {
-        for (WebSocketSession session : roomSession.values()) {
-            if (session.isOpen()) {
-                try {
-                    JsonObject jsonObject = new JsonParser().parse(message.getPayload()).getAsJsonObject();
+        List<WebSocketSession> sessions = roomSessions.get(roomId);
+        if (sessions != null) {
+            for (WebSocketSession session : sessions) {
+                if (session.isOpen()) {
+                    try {
+                        JsonObject jsonObject = new JsonParser().parse(message.getPayload()).getAsJsonObject();
+                        jsonObject.addProperty("isCorrect", isCorrect);
 
-                    System.out.println(isCorrect);
-                    jsonObject.addProperty("isCorrect", isCorrect);
-
-                    String modifiedMessage = jsonObject.toString();
-                    System.out.println(modifiedMessage);
-
-                    session.sendMessage(new TextMessage(modifiedMessage));
-                } catch (IOException e) {
-                    System.err.println("Failed to send chat message to room member: " + e.getMessage());
+                        String modifiedMessage = jsonObject.toString();
+                        session.sendMessage(new TextMessage(modifiedMessage));
+                    } catch (IOException e) {
+                        System.err.println("Failed to send chat message to room member: " + e.getMessage());
+                    }
                 }
             }
         }
