@@ -25,6 +25,7 @@ public class Room {
 
     public void addUser(String username) {
         connectedUsers.add(username);
+        System.out.println(connectedUsers);
     }
 
     public void removeUser(String username) {

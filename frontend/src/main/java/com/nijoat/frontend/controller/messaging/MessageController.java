@@ -8,6 +8,7 @@ import com.nijoat.frontend.websocket.ChatWebSocket;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextFlow;
 import javafx.scene.text.Text;
@@ -45,6 +46,17 @@ public class MessageController {
             socket = new ChatWebSocket();
             client.connect(socket, echoURI);
             socket.setMessageHandler(this::processMessage);
+            
+            // Mahdollistaa viestin lähettämisen enterillä!
+            inputField.setOnKeyPressed(event -> {
+                if (event.getCode().equals(KeyCode.ENTER)) {
+                    try {
+                        onButtonSend(new ActionEvent());
+                    } catch (JsonProcessingException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
         } catch (Throwable e) {
             e.printStackTrace();
         }

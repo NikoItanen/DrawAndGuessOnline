@@ -56,6 +56,20 @@ public class RoomController {
     }
 
     @FXML
+    protected void onStartGameClick(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/nijoat/frontend/game-view.fxml"));
+            Parent root = fxmlLoader.load();
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            currentStage.getScene().setRoot(root);
+
+            closeRoomWebSocket();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
     protected void onExitButtonClick(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/nijoat/frontend/menu-view.fxml"));

@@ -26,9 +26,6 @@ public class RoomWebSocketHandler extends TextWebSocketHandler {
     private final RoomService roomService;
     private Room room;
 
-
-
-
     @Autowired
     public RoomWebSocketHandler(ObjectMapper objectMapper, RoomService roomService) {
         this.objectMapper = objectMapper;

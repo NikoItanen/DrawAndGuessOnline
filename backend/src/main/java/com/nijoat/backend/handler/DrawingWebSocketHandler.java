@@ -47,5 +47,8 @@ public class DrawingWebSocketHandler extends TextWebSocketHandler {
         }
         sendMessageToAllSessions(receivedMessage);
     }
-    
+
+    public void sendClearCanvas() {
+        sendMessageToAllSessions("clear");
+    }
 }

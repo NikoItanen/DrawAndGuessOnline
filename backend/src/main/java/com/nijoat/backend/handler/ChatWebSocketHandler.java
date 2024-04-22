@@ -28,6 +28,9 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     private boolean isCorrect;
 
     @Autowired
+    private DrawingWebSocketHandler drawingWebSocketHandler;
+
+    @Autowired
     private GameWebSocketHandler gameWebSocketHandler;
 
     @Autowired
@@ -55,7 +58,8 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
         if (receivedMessage.getContent().equals(randWord)) {
             System.out.println("Correcto!");
             isCorrect = true;
-            gameWebSocketHandler.generateRandomWord();
+            gameWebSocketHandler.generateRandomWord(); // Uusi sana
+            drawingWebSocketHandler.sendClearCanvas(); // Tyhjentää taulun arvauksen jälkeen
         } else {
             isCorrect = false;
         }

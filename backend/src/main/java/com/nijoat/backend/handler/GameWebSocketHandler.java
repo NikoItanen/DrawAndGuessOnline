@@ -25,20 +25,48 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
     private String randWord;
 
     private List<WebSocketSession> sessions = new ArrayList<>();
+    private int lastSelectedUserIndex = -1;
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         sessions.add(session);
         generateRandomWord();
     }
-
+    
+    // Logiikka käyttäjien valitsemiseen sekä satunnaisen sanan valitsemiseksi
+    // TODO: Parempi tapa valita satunnainen sana!
     public void generateRandomWord() {
         readWordsFromFile("backend/src/main/java/com/nijoat/backend/handler/words.txt");
         Random rand = new Random();
         int index = rand.nextInt(gamewords.size());
         randWord = gamewords.get(index);
         System.out.println("Random word generated: " + randWord);
-        sendMessageToAllSessions(randWord);
+    
+        lastSelectedUserIndex++;
+        if (lastSelectedUserIndex >= sessions.size()) {
+            lastSelectedUserIndex = 0;
+        }
+    
+        for (int i = 0; i < sessions.size(); i++) {
+            WebSocketSession session = sessions.get(i);
+            if (i == lastSelectedUserIndex) {
+                try {
+                    sendMessageToSession(session, randWord);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                StringBuilder blanks = new StringBuilder();
+                for (int j = 0; j < randWord.length(); j++) {
+                    blanks.append("_");
+                }
+                try {
+                    sendMessageToSession(session, blanks.toString());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     private void readWordsFromFile(String filename) {
@@ -54,18 +82,6 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
 
     private void sendMessageToSession(WebSocketSession session, String message) throws IOException {
         session.sendMessage(new TextMessage(message));
-    }
-
-
-    // Tää koska ChatWebSocketHandleristä kutsuminen sekoittaa ton ylläolevan session -systeemin
-    private void sendMessageToAllSessions(String message) {
-        for (WebSocketSession session : sessions) {
-            try {
-                sendMessageToSession(session, message);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     public String getRandomWord() {
