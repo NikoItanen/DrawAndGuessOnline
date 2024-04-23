@@ -1,9 +1,7 @@
 package com.nijoat.frontend.controller.drawing;
 
 import java.net.URI;
-
 import org.eclipse.jetty.websocket.client.WebSocketClient;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -43,7 +41,13 @@ public class DrawingController {
     private GraphicsContext gc;
 
     public void initialize() {
+        initializeWebSocketClient();
+        initializeGraphicsContext();
+        bindBrushSizeControls();
+        setupDrawingEventHandlers();
+    }
 
+    private void initializeWebSocketClient() {
         client = new WebSocketClient();
         try {
             client.start();
@@ -54,42 +58,56 @@ public class DrawingController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
+    private void initializeGraphicsContext() {
         gc = canvas.getGraphicsContext2D();
         clearCanvas();
+    }
 
+    private void bindBrushSizeControls() {
         double initialBrushSize = Double.parseDouble(brushSize.getText());
         brushSizeSlider.setValue(initialBrushSize);
-
         brushSizeSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
             brushSize.setText(String.format("%.0f", newValue.doubleValue()));
         });
+    }
 
+    private void setupDrawingEventHandlers() {
         canvas.setOnMouseClicked(e -> drawOrErase(e.getX(), e.getY(), brushSizeSlider.getValue()));
         canvas.setOnMouseDragged(e -> drawOrErase(e.getX(), e.getY(), brushSizeSlider.getValue()));
     }
 
     public void processMessage(String message) {
         Platform.runLater(() -> {
-
-            try {
-                if (message.equals("clear")) {
-                    clearCanvas();
-                } else {
-                    ObjectMapper objectMapper = new ObjectMapper();
-                    JsonNode rootNode = objectMapper.readTree(message);
-
-                    double x = rootNode.get("x").asDouble();
-                    double y = rootNode.get("y").asDouble();
-                    double size = rootNode.get("size").asDouble();
-                    Color color = Color.web(rootNode.get("color").asText());
-
-                    draw(x, y, size, color);
-                }
-            } catch (Exception e) {
-                System.err.println("Error processing message: " + e.getMessage());
-            }
+            handleIncomingMessage(message);
         });
+    }
+
+    private void handleIncomingMessage(String message) {
+        try {
+            if (message.equals("clear")) {
+                clearCanvas();
+            } else {
+                JsonNode rootNode = parseMessage(message);
+                drawFromMessage(rootNode);
+            }
+        } catch (Exception e) {
+            System.err.println("Error processing message: " + e.getMessage());
+        }
+    }
+
+    private JsonNode parseMessage(String message) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.readTree(message);
+    }
+
+    private void drawFromMessage(JsonNode rootNode) {
+        double x = rootNode.get("x").asDouble();
+        double y = rootNode.get("y").asDouble();
+        double size = rootNode.get("size").asDouble();
+        Color color = Color.web(rootNode.get("color").asText());
+        draw(x, y, size, color);
     }
 
     private void draw(double x, double y, double size, Color color) {
@@ -112,11 +130,11 @@ public class DrawingController {
             gc.setFill(colorPicker.getValue());
         }
         gc.fillRect(x - size / 2, y - size / 2, size, size);
-        String message = drawingToJSON(x, y, size);
+        String message = createDrawingJSON(x, y, size);
         sendMessageToBackend(message);
     }
 
-    private String drawingToJSON(double x, double y, double size) {
+    private String createDrawingJSON(double x, double y, double size) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             ObjectNode rootNode = objectMapper.createObjectNode();
@@ -143,6 +161,7 @@ public class DrawingController {
         gc.setFill(Color.WHITE);
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
     }
+
     @FXML
     private void sendClearCanvas() {
         socket.sendMessage("clear");
