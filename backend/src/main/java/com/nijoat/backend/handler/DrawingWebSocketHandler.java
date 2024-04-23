@@ -12,6 +12,7 @@ import org.springframework.web.socket.TextMessage;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+// Tämä komponentti on määritelty kehittämään WebSocket-palvelimen toiminnallisuutta piirtoalustan hallintaan.
 @Component
 public class DrawingWebSocketHandler extends TextWebSocketHandler {
 
@@ -26,6 +27,7 @@ public class DrawingWebSocketHandler extends TextWebSocketHandler {
 
     }
 
+    // Lähettää viestin yksittäiselle WebSocket-istunnolle.
     private void sendMessageToSession(WebSocketSession session, String message) throws IOException {
         session.sendMessage(new TextMessage(message));
     }
@@ -39,6 +41,8 @@ public class DrawingWebSocketHandler extends TextWebSocketHandler {
             }
         }
     }
+
+    // Vastaanottaa clear-viestin ja lähettää sen kaikille istunnoille.
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         String receivedMessage = message.getPayload();

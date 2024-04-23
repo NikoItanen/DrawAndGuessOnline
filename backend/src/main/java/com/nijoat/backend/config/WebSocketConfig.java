@@ -12,16 +12,19 @@ import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
 
-
+// Määrittää luokan konfiguraatioksi Spring-kontekstissa ja ottaa WebSocket-tuen käyttöön.
 @Configuration
 @EnableWebSocket
 public class WebSocketConfig implements WebSocketConfigurer {
+
+    // Alustetaan WebSocket-käsittelijät eri toiminnallisuuksille.
     private final MainWebSocketHandler menuWebSocketHandler;
     private final RoomWebSocketHandler roomWebSocketHandler;
     private final ChatWebSocketHandler chatWebSocketHandler;
     private final GameWebSocketHandler gameWebSocketHandler;
     private final DrawingWebSocketHandler drawingWebSocketHandler;
 
+    // Konstruktori, jossa WebSocket-käsittelijät injektoidaan Springin @Autowired-annotaatiolla.
     @Autowired
     public WebSocketConfig(MainWebSocketHandler MenuWebSocketHandler, RoomWebSocketHandler roomWebSocketHandler, ChatWebSocketHandler chatWebSocketHandler, GameWebSocketHandler gameWebSocketHandler, DrawingWebSocketHandler drawingWebSocketHandler) {
         this.menuWebSocketHandler = MenuWebSocketHandler;
@@ -31,6 +34,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
         this.drawingWebSocketHandler = drawingWebSocketHandler;
     }
 
+    // Metodi, joka rekisteröi määritellyt WebSocket-käsittelijät URI-polkuihin ja sallii yhteydet kaikista lähteistä.
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         registry.addHandler(menuWebSocketHandler, "/websocket/menu").setAllowedOrigins("*");
