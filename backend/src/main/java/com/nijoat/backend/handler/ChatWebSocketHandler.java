@@ -54,10 +54,13 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
         Message receivedMessage = objectMapper.readValue(payload, Message.class);
         
         String randWord = gameWebSocketHandler.getRandomWord();
+        String username = receivedMessage.getSender();
         
         if (receivedMessage.getContent().equals(randWord)) {
             System.out.println("Correcto!");
             isCorrect = true;
+            gameWebSocketHandler.givePoints(username); // Anna pisteitä oikeasta arvauksesta
+            gameWebSocketHandler.giveLocalPoints(username); // Anna pisteitä oikeasta arvauksesta vain tähän peliin
             gameWebSocketHandler.generateRandomWord(); // Uusi sana
             drawingWebSocketHandler.sendClearCanvas(); // Tyhjentää taulun arvauksen jälkeen
         } else {

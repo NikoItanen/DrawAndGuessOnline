@@ -13,9 +13,15 @@ public class User {
     private String id;
     private String username;
     private String password;
+    private int points;
 
     public User(String username, String password) {
         this.username = username;
         this.password = password;
+        this.points = 0;
+    }
+
+    public void incrementPoints() {
+        this.points++;
     }
 }

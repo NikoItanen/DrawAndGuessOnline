@@ -1,5 +1,9 @@
 package com.nijoat.backend.handler;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.nijoat.backend.model.User;
+import com.nijoat.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.TextMessage;
@@ -12,7 +16,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 @Component
@@ -21,9 +27,12 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Autowired
+    private UserRepository userRepository;
+
     private final List<String> gamewords = new ArrayList<>();
     private String randWord;
-
+    private Map<String, Integer> playerPoints = new HashMap<>();
     private List<WebSocketSession> sessions = new ArrayList<>();
     private int lastSelectedUserIndex = -1;
 
@@ -80,11 +89,45 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
         }
     }
 
+    // Viestin lähettäminen
     private void sendMessageToSession(WebSocketSession session, String message) throws IOException {
         session.sendMessage(new TextMessage(message));
     }
 
     public String getRandomWord() {
         return randWord;
+    }
+
+    // Pisteet jotka ei mene databaseen
+    public void giveLocalPoints(String username) throws IOException {
+        int currentPoints = playerPoints.getOrDefault(username, 0);
+        playerPoints.put(username, currentPoints + 1);
+        sendPointsToAllSessions();
+    }
+
+    // Pisteet jotka ei mene databaseen
+    public void sendPointsToAllSessions() throws IOException {
+        JsonObject allPlayerPointsJson = new JsonObject();
+        for (Map.Entry<String, Integer> entry : playerPoints.entrySet()) {
+            allPlayerPointsJson.addProperty(entry.getKey(), entry.getValue());
+        }
+        
+        String message = allPlayerPointsJson.toString();
+        for (WebSocketSession session : sessions) {
+            if (session.isOpen()) {
+                sendMessageToSession(session, message);
+            }
+        }
+    }
+
+    // Pisteet jotka menee databaseen
+    public void givePoints(String username) {
+        User user = userRepository.findByUsername(username);
+        if (user != null) {
+            user.incrementPoints();
+            userRepository.save(user);
+        } else {
+            System.out.println("User not found!");
+        }
     }
 }
