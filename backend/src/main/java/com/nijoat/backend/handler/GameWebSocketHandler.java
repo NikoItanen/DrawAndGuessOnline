@@ -1,5 +1,6 @@
 package com.nijoat.backend.handler;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.nijoat.backend.model.User;
@@ -35,11 +36,51 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
     private Map<String, Integer> playerPoints = new HashMap<>();
     private List<WebSocketSession> sessions = new ArrayList<>();
     private int lastSelectedUserIndex = -1;
+    private String usernameback;
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         sessions.add(session);
+        String username = (String) session.getHandshakeHeaders().getFirst("Username");
+        usernameback = username;
+        playerPoints.put(usernameback, 0);
         generateRandomWord();
+        sendAllUsersToSessions();
+        sendPlayerPointsToSessions();
+    }
+
+    // Leaderboard
+    public void sendAllUsersToSessions() throws IOException {
+        List<User> allUsers = userRepository.findAll();
+        JsonObject allUsersJson = new JsonObject();
+        
+        for (User user : allUsers) {
+            allUsersJson.addProperty(user.getUsername(), user.getPoints());
+        }
+        
+        String message = allUsersJson.toString();
+        for (WebSocketSession session : sessions) {
+            if (session.isOpen()) {
+                sendMessageToSession(session, message);
+            }
+        }
+    }
+
+    public void giveLocalPoints(String username) {
+
+        if (playerPoints.containsKey(username)) {
+            int currentPoints = playerPoints.get(username);
+            currentPoints++;
+            playerPoints.put(username, currentPoints);
+        } else {
+            playerPoints.put(username, 1);
+        }
+
+        try {
+            sendPlayerPointsToSessions();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     
     // Logiikka käyttäjien valitsemiseen sekä satunnaisen sanan valitsemiseksi
@@ -98,28 +139,6 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
         return randWord;
     }
 
-    // Pisteet jotka ei mene databaseen
-    public void giveLocalPoints(String username) throws IOException {
-        int currentPoints = playerPoints.getOrDefault(username, 0);
-        playerPoints.put(username, currentPoints + 1);
-        sendPointsToAllSessions();
-    }
-
-    // Pisteet jotka ei mene databaseen
-    public void sendPointsToAllSessions() throws IOException {
-        JsonObject allPlayerPointsJson = new JsonObject();
-        for (Map.Entry<String, Integer> entry : playerPoints.entrySet()) {
-            allPlayerPointsJson.addProperty(entry.getKey(), entry.getValue());
-        }
-        
-        String message = allPlayerPointsJson.toString();
-        for (WebSocketSession session : sessions) {
-            if (session.isOpen()) {
-                sendMessageToSession(session, message);
-            }
-        }
-    }
-
     // Pisteet jotka menee databaseen
     public void givePoints(String username) {
         User user = userRepository.findByUsername(username);
@@ -128,6 +147,22 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
             userRepository.save(user);
         } else {
             System.out.println("User not found!");
+        }
+    }
+
+    public void sendPlayerPointsToSessions() throws IOException {
+        JsonArray playerPointsArray = new JsonArray();
+        for (Map.Entry<String, Integer> entry : playerPoints.entrySet()) {
+            JsonObject playerPointsEntry = new JsonObject();
+            playerPointsEntry.addProperty("username", entry.getKey());
+            playerPointsEntry.addProperty("points", entry.getValue());
+            playerPointsArray.add(playerPointsEntry);
+        }
+        String message = playerPointsArray.toString();
+        for (WebSocketSession session : sessions) {
+            if (session.isOpen()) {
+                sendMessageToSession(session, message);
+            }
         }
     }
 }

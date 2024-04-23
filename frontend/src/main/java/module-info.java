@@ -14,6 +14,7 @@ module com.nijoat.frontend {
     requires java.logging;
     requires java.net.http;
     requires com.fasterxml.jackson.core;
+    requires javafx.base;
 
     opens com.nijoat.frontend to javafx.fxml;
     opens com.nijoat.frontend.model to com.fasterxml.jackson.databind;

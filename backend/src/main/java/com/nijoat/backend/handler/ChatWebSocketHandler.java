@@ -60,7 +60,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
             System.out.println("Correcto!");
             isCorrect = true;
             gameWebSocketHandler.givePoints(username); // Anna pisteitä oikeasta arvauksesta
-            gameWebSocketHandler.giveLocalPoints(username); // Anna pisteitä oikeasta arvauksesta vain tähän peliin
+            gameWebSocketHandler.giveLocalPoints(username); // Lokaalit pisteet
             gameWebSocketHandler.generateRandomWord(); // Uusi sana
             drawingWebSocketHandler.sendClearCanvas(); // Tyhjentää taulun arvauksen jälkeen
         } else {
