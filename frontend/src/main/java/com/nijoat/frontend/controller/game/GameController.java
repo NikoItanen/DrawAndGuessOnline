@@ -1,6 +1,12 @@
 package com.nijoat.frontend.controller.game;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nijoat.frontend.model.User;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.stage.Stage;
 import org.eclipse.jetty.websocket.client.WebSocketClient;
 import org.eclipse.jetty.websocket.client.ClientUpgradeRequest;
 import com.nijoat.frontend.websocket.GameWebSocket;
@@ -17,6 +23,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
 
+import java.io.IOException;
 import java.net.URI;
 
 public class GameController {
@@ -29,6 +36,9 @@ public class GameController {
 
     @FXML
     private ListView<String> leaderboardListView1;
+
+    @FXML
+    private Text role;
 
     @FXML
     private Text gamewordText;
@@ -85,7 +95,16 @@ public class GameController {
                     }
     
                     leaderboardListView1.setItems(playerPointsEntries);
-                } else {
+                } else if (message.startsWith("/guesser")) {
+                    role.setText("Guesser");
+                    UserSession.setIsDrawer(false);
+                } else if (message.equals("/drawer")) {
+                    role.setText("Drawer");
+                    UserSession.setIsDrawer(true);
+
+                }
+
+                else {
                     // Jos tulee viestinä randword
                     gamewordText.setText(message);
                 }
@@ -94,7 +113,19 @@ public class GameController {
             }
         });
     }
-    
+
+    @FXML
+    protected void onExitButtonClick(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/nijoat/frontend/menu-view.fxml"));
+            Parent root = fxmlLoader.load();
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            currentStage.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void closeWebSocket() {
         try {
             client.stop();
