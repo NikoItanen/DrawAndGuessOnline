@@ -7,6 +7,7 @@ import com.nijoat.frontend.util.UserSession;
 import com.nijoat.frontend.websocket.ChatWebSocket;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
@@ -27,6 +28,9 @@ public class MessageController {
 
     @FXML
     private TextField inputField;
+
+    @FXML
+    private ScrollPane scrollPane;
 
     @FXML
     private TextFlow messageFlow;
@@ -81,6 +85,7 @@ public class MessageController {
                 }
 
                 messageFlow.getChildren().addAll(senderText, contentText, new Text("\n"));
+                scrollPane.setVvalue(1.0);
             });
         } catch (Exception e) {
             System.err.println("Error parsing JSON: " + e.getMessage());

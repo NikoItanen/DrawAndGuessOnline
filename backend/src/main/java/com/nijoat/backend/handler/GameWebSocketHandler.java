@@ -102,16 +102,18 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
             if (i == lastSelectedUserIndex) {
                 try {
                     sendMessageToSession(session, randWord);
+                    sendMessageToSession(session, "/drawer");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             } else {
                 StringBuilder blanks = new StringBuilder();
                 for (int j = 0; j < randWord.length(); j++) {
-                    blanks.append("_");
+                    blanks.append("_ ");
                 }
                 try {
                     sendMessageToSession(session, blanks.toString());
+                    sendMessageToSession(session, "/guesser");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

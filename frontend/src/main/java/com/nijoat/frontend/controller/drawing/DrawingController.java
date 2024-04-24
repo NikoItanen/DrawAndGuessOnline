@@ -1,6 +1,8 @@
 package com.nijoat.frontend.controller.drawing;
 
 import java.net.URI;
+
+import com.nijoat.frontend.util.UserSession;
 import org.eclipse.jetty.websocket.client.WebSocketClient;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -124,14 +126,16 @@ public class DrawingController {
     }
 
     private void drawOrErase(double x, double y, double size) {
-        if (eraser.isSelected()) {
-            gc.setFill(Color.WHITE);
-        } else {
-            gc.setFill(colorPicker.getValue());
+        if (UserSession.getIsDrawer()) {
+            if (eraser.isSelected()) {
+                gc.setFill(Color.WHITE);
+            } else {
+                gc.setFill(colorPicker.getValue());
+            }
+            gc.fillRect(x - size / 2, y - size / 2, size, size);
+            String message = drawingToJSON(x, y, size);
+            sendMessageToBackend(message);
         }
-        gc.fillRect(x - size / 2, y - size / 2, size, size);
-        String message = createDrawingJSON(x, y, size);
-        sendMessageToBackend(message);
     }
 
     private String createDrawingJSON(double x, double y, double size) {
@@ -164,7 +168,9 @@ public class DrawingController {
 
     @FXML
     private void sendClearCanvas() {
-        socket.sendMessage("clear");
+        if (UserSession.getIsDrawer()) {
+            socket.sendMessage("clear");
+        }
     }
 
     public void onExit() {
