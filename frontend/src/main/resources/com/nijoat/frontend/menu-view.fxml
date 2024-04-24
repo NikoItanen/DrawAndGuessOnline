@@ -6,9 +6,11 @@
 <?import javafx.scene.effect.Glow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" spacing="20.0" style="-fx-background-color: #F5EBEB;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nijoat.frontend.controller.menu.MenuController">
     <padding>
@@ -38,53 +40,87 @@
       </left>
    </BorderPane>
 
-    <BorderPane prefHeight="755.0" prefWidth="1240.0">
+    <BorderPane prefHeight="780.0" prefWidth="1240.0">
       <left>
-         <BorderPane prefHeight="648.0" prefWidth="400.0" style="-fx-background-color: #E4D0D0; -fx-border-color: #D5B4B4;" BorderPane.alignment="CENTER">
+         <BorderPane prefHeight="612.0" prefWidth="671.0" style="-fx-background-color: #E4D0D0; -fx-border-color: #D5B4B4;" BorderPane.alignment="CENTER">
             <top>
-               <BorderPane prefHeight="100.0" prefWidth="398.0" style="-fx-background-color: #D5B4B4; -fx-border-color: #867070;" BorderPane.alignment="CENTER">
+               <BorderPane prefHeight="117.0" prefWidth="664.0" style="-fx-background-color: #D5B4B4; -fx-border-color: #867070;" BorderPane.alignment="CENTER">
                   <center>
-                     <Button mnemonicParsing="false" onAction="#joinLobby" text="Find Game" BorderPane.alignment="CENTER">
-                        <font>
-                           <Font size="24.0" />
-                        </font>
-                     </Button>
+                     <BorderPane prefHeight="293.0" prefWidth="662.0" BorderPane.alignment="CENTER">
+                        <right>
+                           <Button mnemonicParsing="false" onAction="#joinLobby" text="Find Game" BorderPane.alignment="CENTER">
+                              <font>
+                                 <Font size="24.0" />
+                              </font>
+                              <BorderPane.margin>
+                                 <Insets right="80.0" />
+                              </BorderPane.margin>
+                           </Button>
+                        </right>
+                        <left>
+                           <Button mnemonicParsing="false" onAction="#createRoom" text="Start a New Game" BorderPane.alignment="CENTER">
+                              <font>
+                                 <Font size="24.0" />
+                              </font>
+                              <BorderPane.margin>
+                                 <Insets left="80.0" />
+                              </BorderPane.margin>
+                           </Button>
+                        </left>
+                     </BorderPane>
                   </center>
                </BorderPane>
             </top>
-         </BorderPane>
-      </left>
-      <right>
-         <BorderPane prefHeight="648.0" prefWidth="410.0" style="-fx-background-color: #E4D0D0; -fx-border-color: #D5B4B4;" BorderPane.alignment="CENTER">
-            <top>
-               <BorderPane prefHeight="100.0" prefWidth="408.0" style="-fx-background-color: #D5B4B4; -fx-border-color: #867070;" BorderPane.alignment="CENTER">
-                  <center>
-                     <Label alignment="CENTER" prefHeight="65.0" prefWidth="350.0" text="Leaderboards" textAlignment="CENTER" BorderPane.alignment="CENTER">
+            <center>
+               <AnchorPane prefHeight="460.0" prefWidth="669.0" BorderPane.alignment="CENTER">
+                  <children>
+                     <Text layoutX="31.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" a fun and interactive online game where players take turns drawing pictures based on given words or phrases, while others try to guess the drawings in real-time through chat." wrappingWidth="601.736328125">
+                        <font>
+                           <Font size="23.0" />
+                        </font>
+                     </Text>
+                     <Text layoutX="36.0" layoutY="196.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The objective of &quot;Draw and Guess&quot; is to have fun, showcase your artistic skills, and test your ability to interpret drawings within a lively and engaging online community. Earn points, climb the leaderboard, and enjoy the challenge of drawing and guessing in real-time!" wrappingWidth="237.736328125">
+                        <font>
+                           <Font size="18.0" />
+                        </font>
+                     </Text>
+                     <Text layoutX="155.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to &quot;Draw and Guess,&quot;" wrappingWidth="354.736328125">
                         <font>
                            <Font size="25.0" />
                         </font>
-                     </Label>
-                  </center>
-               </BorderPane>
-            </top>
+                     </Text>
+                     <Text layoutX="399.0" layoutY="261.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Credits:">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </Text>
+                     <Text layoutX="382.0" layoutY="297.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Niko Itänen">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </Text>
+                     <Text layoutX="356.0" layoutY="333.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Jeremias Otranen">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </Text>
+                     <Text layoutX="377.0" layoutY="369.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Akseli Teuho">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </Text>
+                  </children>
+               </AnchorPane>
+            </center>
          </BorderPane>
-      </right>
+      </left>
       <effect>
          <Glow />
       </effect>
       <center>
-         <BorderPane prefHeight="648.0" prefWidth="411.0" style="-fx-border-color: #D5B4B4; -fx-background-color: #E4D0D0;" BorderPane.alignment="CENTER">
-            <top>
-               <BorderPane prefHeight="100.0" prefWidth="428.0" style="-fx-background-color: #D5B4B4; -fx-border-color: #867070;" BorderPane.alignment="CENTER">
-                  <center>
-                     <Button mnemonicParsing="false" onAction="#createRoom" text="Start a New Game" BorderPane.alignment="CENTER">
-                        <font>
-                           <Font size="24.0" />
-                        </font>
-                     </Button>
-                  </center>
-               </BorderPane>
-            </top>
-         </BorderPane>
-      </center></BorderPane>
+         <fx:include source="leaderboard.fxml" />
+      </center>
+      <right>
+         <BorderPane prefHeight="591.0" prefWidth="0.0" BorderPane.alignment="CENTER" />
+      </right></BorderPane>
 </VBox>

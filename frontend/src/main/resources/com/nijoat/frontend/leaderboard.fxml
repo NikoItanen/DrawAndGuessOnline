@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="516.0" prefWidth="446.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nijoat.frontend.controller.leaderboard.LeaderboardController">
+   <center>
+      <ListView fx:id="leaderboardListView" prefHeight="542.0" prefWidth="478.0" BorderPane.alignment="CENTER" />
+   </center>
+   <top>
+      <BorderPane prefHeight="52.0" prefWidth="334.0" BorderPane.alignment="CENTER">
+         <center>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Leaderboard TOP 10" BorderPane.alignment="CENTER" />
+         </center>
+      </BorderPane>
+   </top>
+</BorderPane>

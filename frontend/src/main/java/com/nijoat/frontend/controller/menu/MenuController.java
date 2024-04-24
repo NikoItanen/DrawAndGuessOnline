@@ -1,5 +1,6 @@
 package com.nijoat.frontend.controller.menu;
 
+import com.nijoat.frontend.controller.leaderboard.LeaderboardController;
 import com.nijoat.frontend.controller.messaging.MessageController;
 import com.nijoat.frontend.controller.room.CreateRoomController;
 import com.nijoat.frontend.controller.room.RoomController;
