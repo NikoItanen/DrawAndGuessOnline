@@ -36,13 +36,6 @@
             </image>
          </ImageView>
       </left>
-      <top>
-         <BorderPane prefHeight="30.0" prefWidth="1238.0" BorderPane.alignment="CENTER">
-            <left>
-               <Button onAction="#testRoomButtonClick" text="TESTROOM" BorderPane.alignment="CENTER" />
-            </left>
-         </BorderPane>
-      </top>
    </BorderPane>
 
     <BorderPane prefHeight="755.0" prefWidth="1240.0">
@@ -84,7 +77,7 @@
             <top>
                <BorderPane prefHeight="100.0" prefWidth="428.0" style="-fx-background-color: #D5B4B4; -fx-border-color: #867070;" BorderPane.alignment="CENTER">
                   <center>
-                     <Button mnemonicParsing="false" text="Start a New Game" BorderPane.alignment="CENTER" onAction="#createRoom">
+                     <Button mnemonicParsing="false" onAction="#createRoom" text="Start a New Game" BorderPane.alignment="CENTER">
                         <font>
                            <Font size="24.0" />
                         </font>

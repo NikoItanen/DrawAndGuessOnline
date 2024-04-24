@@ -3,6 +3,7 @@ package com.nijoat.frontend.controller.menu;
 import com.nijoat.frontend.controller.messaging.MessageController;
 import com.nijoat.frontend.controller.room.CreateRoomController;
 import com.nijoat.frontend.controller.room.RoomController;
+import com.nijoat.frontend.controller.room.RoomListController;
 import com.nijoat.frontend.model.Player;
 import com.nijoat.frontend.model.User;
 import com.nijoat.frontend.util.UserSession;
@@ -53,14 +54,34 @@ public class MenuController {
     }
 
     @FXML
-    protected void joinLobby (ActionEvent event) {
+    protected void joinLobby(ActionEvent event) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/nijoat/frontend/roomlist-view.fxml"));
-            Parent root = fxmlLoader.load();
-            Stage lobbyStage = new Stage();
-            lobbyStage.setScene(new Scene(root));
-            lobbyStage.setTitle("Room List");
-            lobbyStage.show();
+            FXMLLoader roomListLoader = new FXMLLoader(getClass().getResource("/com/nijoat/frontend/roomlist-view.fxml"));
+            Parent roomListRoot = roomListLoader.load();
+            RoomListController roomListController = roomListLoader.getController();
+
+            roomListController.setOnRoomList(roomName -> {
+                try {
+                    FXMLLoader roomLoader = new FXMLLoader(getClass().getResource("/com/nijoat/frontend/room-view.fxml"));
+                    Parent roomRoot = roomLoader.load();
+                    RoomController roomController = roomLoader.getController();
+
+                    roomController.initializeRoomWebSocket(roomName);
+                    Player joiningPlayer = new Player(UserSession.getUsername());
+                    roomController.addPlayerToRoom(joiningPlayer);
+                    Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    currentStage.getScene().setRoot(roomRoot);
+                    roomController.showUserList();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+
+            Stage createRoomStage = new Stage();
+            createRoomStage.setScene(new Scene(roomListRoot));
+            createRoomStage.setTitle("Join Room");
+            createRoomStage.show();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -109,19 +130,20 @@ public class MenuController {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
-
-    @FXML
-    protected void testRoomButtonClick(ActionEvent event) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/nijoat/frontend/game-view.fxml"));
-            Parent root = fxmlLoader.load();
-            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-            currentStage.getScene().setRoot(root);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }
+
+
+    // A TEST ROOM-METHOD FOR THE FUTURE DEVELOPMENT PROCESS.
+//    @FXML
+//    protected void testRoomButtonClick(ActionEvent event) {
+//        try {
+//            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/nijoat/frontend/game-view.fxml"));
+//            Parent root = fxmlLoader.load();
+//            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+//
+//            currentStage.getScene().setRoot(root);
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }

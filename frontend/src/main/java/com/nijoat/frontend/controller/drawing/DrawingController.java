@@ -133,7 +133,7 @@ public class DrawingController {
                 gc.setFill(colorPicker.getValue());
             }
             gc.fillRect(x - size / 2, y - size / 2, size, size);
-            String message = drawingToJSON(x, y, size);
+            String message = createDrawingJSON(x, y, size);
             sendMessageToBackend(message);
         }
     }
